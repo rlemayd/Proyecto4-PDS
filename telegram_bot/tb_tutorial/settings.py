@@ -24,7 +24,7 @@ SECRET_KEY = 'd0qr(^--(5yc^&iilm(ln%@wttkd&r#*!b_pgl$ruqjc-&$ko('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["317016fc0aea.ngrok.io"]
+ALLOWED_HOSTS = ["317016fc0aea.ngrok.io","Projecto-4-PDS.herokuapp.com"]
 
 
 # Application definition
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # custom apps
-    #'tb_tutorial'
+    'Projecto-4-PDS'
 ]
 
 MIDDLEWARE = [
@@ -73,7 +73,10 @@ WSGI_APPLICATION = 'tb_tutorial.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-MONGO_CLIENT = MongoClient("mongodb://localhost:27017/")
+mongodb_user = "rlemayd"
+mongodb_password = "proyecto4pds"
+mongodb_host = "cluster0.o8ztz.mongodb.net"
+MONGO_CLIENT = MongoClient(f"mongodb://{mongodb_user}:{mongodb_password}@{mongodb_host}")
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -121,4 +124,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MONGO_DB = MONGO_CLIENT.telegram_bots
-# STATIC_ROOT = os.path.join(BASE_DIR, "..", "static_files")
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "static_files")

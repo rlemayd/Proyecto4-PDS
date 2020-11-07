@@ -136,6 +136,7 @@ traitlets==4.3.3
 ttystatus==0.38
 ubuntu-advantage-tools==20.3
 ubuntu-drivers-common==0.0.0
+gunicorn==19.9.0  # server
 ufw==0.36
 Unidecode==1.1.1
 urllib3==1.25.8
