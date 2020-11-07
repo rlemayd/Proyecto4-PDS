@@ -24,7 +24,7 @@ SECRET_KEY = 'd0qr(^--(5yc^&iilm(ln%@wttkd&r#*!b_pgl$ruqjc-&$ko('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["317016fc0aea.ngrok.io","Projecto-4-PDS.herokuapp.com"]
+ALLOWED_HOSTS = ["317016fc0aea.ngrok.io","proyecto-4-rich-kath.herokuapp.com"]
 
 
 # Application definition
