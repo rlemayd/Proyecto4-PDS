@@ -1,1 +1,1 @@
-web: gunicorn tb_tutorial.wsgi
+web: gunicorn Proyecto-4-PDS.wsgi
