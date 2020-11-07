@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 from pathlib import Path
 from pymongo import MongoClient
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -125,3 +126,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MONGO_DB = MONGO_CLIENT.telegram_bots
 STATIC_ROOT = os.path.join(BASE_DIR, "..", "static_files")
+# Activate Django-Heroku.
+django_heroku.settings(locals())
