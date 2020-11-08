@@ -37,9 +37,9 @@ class TutorialBotView(View):
             chat["_id"] = response.inserted_id
         
         else:
-            if chat[text]:
-                print(chat[text])
-                self.send_message(chat[text], t_chat["id"])
+            print(chat)
+            #print(chat[text])
+            #self.send_message(chat[text], t_chat["id"])
 
         if cmd == "add":
             values = text[1].split("=")
