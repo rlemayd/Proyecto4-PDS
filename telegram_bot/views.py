@@ -50,7 +50,7 @@ class TutorialBotView(View):
                 self.send_message(msg, t_chat["id"])
                 cmd = ""
             else:
-                try:
+                if text in chat:
                     self.send_message(chat[text], t_chat["id"])
 
         if cmd == "add":
