@@ -43,6 +43,7 @@ class TutorialBotView(View):
             #self.send_message(chat[text], t_chat["id"])
 
         if cmd == "add":
+            text = text.split()
             values = text[1].split("=")
             print("EL COMANDO ES ADD")
             print(text)
