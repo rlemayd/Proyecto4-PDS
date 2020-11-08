@@ -16,6 +16,7 @@ class TutorialBotView(View):
         t_data = json.loads(request.body)
         t_message = t_data["message"]
         t_chat = t_message["chat"]
+        cmd = ""
 
         try:
             text = t_message["text"].strip().lower()
@@ -38,9 +39,7 @@ class TutorialBotView(View):
             chat["_id"] = response.inserted_id
         
         else:
-            print(chat)
-            #print(chat[text])
-            #self.send_message(chat[text], t_chat["id"])
+            self.send_message(chat[text], t_chat["id"])
 
         if cmd == "add":
             text = text.split()
@@ -49,12 +48,14 @@ class TutorialBotView(View):
             telegram_bot_collection.save(chat)
             msg = f"Command: {values[0]} added to bot!"
             self.send_message(msg, t_chat["id"])
-        elif text == "restart":
+        elif cmd == "restart":
             blank_data = {"counter": 0}
             chat.update(blank_data)
             telegram_bot_collection.save(chat)
             msg = "The Tutorial bot was restarted"
             self.send_message(msg, t_chat["id"])
+        elif cmd == "":
+            pass
         else:
             msg = "Unknown command"
             self.send_message(msg, t_chat["id"])
