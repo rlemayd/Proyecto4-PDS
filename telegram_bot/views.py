@@ -1,11 +1,9 @@
 import json
 import os
-
-import requests
 from django.http import JsonResponse
 from django.views import View
 
-from .models import tb_tutorial_collection
+from .models import telegram_bot_collection
 
 TELEGRAM_URL = "https://api.telegram.org/bot"
 TUTORIAL_BOT_TOKEN = "1233503709:AAE4fJsZTy2_AVtXOlOywOX_M18HbIonoEQ"
@@ -25,25 +23,25 @@ class TutorialBotView(View):
 
         text = text.lstrip("/")
         print(text)
-        chat = tb_tutorial_collection.find_one({"chat_id": t_chat["id"]})
+        chat = telegram_bot_collection.find_one({"chat_id": t_chat["id"]})
         if not chat:
             chat = {
                 "chat_id": t_chat["id"],
                 "counter": 0
             }
-            response = tb_tutorial_collection.insert_one(chat)
+            response = telegram_bot_collection.insert_one(chat)
             # we want chat obj to be the same as fetched from collection
             chat["_id"] = response.inserted_id
 
         if text == "+":
             chat["counter"] += 1
-            tb_tutorial_collection.save(chat)
+            telegram_bot_collection.save(chat)
             msg = f"Number of '+' messages that were parsed: {chat['counter']}"
             self.send_message(msg, t_chat["id"])
         elif text == "restart":
             blank_data = {"counter": 0}
             chat.update(blank_data)
-            tb_tutorial_collection.save(chat)
+            telegram_bot_collection.save(chat)
             msg = "The Tutorial bot was restarted"
             self.send_message(msg, t_chat["id"])
         else:

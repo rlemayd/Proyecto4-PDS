@@ -10,7 +10,6 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 from pathlib import Path
 from pymongo import MongoClient
-import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # custom apps
-    'Projecto-4-PDS'
+    'telegram_bot'
 ]
 
 MIDDLEWARE = [
@@ -51,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'tb_tutorial.urls'
+ROOT_URLCONF = 'telegram_bot.urls'
 
 TEMPLATES = [
     {
@@ -69,15 +68,22 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'tb_tutorial.wsgi.application'
+WSGI_APPLICATION = 'telegram_bot.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-mongodb_user = "rlemayd"
-mongodb_password = "proyecto4pds"
-mongodb_host = "cluster0.o8ztz.mongodb.net"
-MONGO_CLIENT = MongoClient(f"mongodb://{mongodb_user}:{mongodb_password}@{mongodb_host}")
+#mongodb_user = "rlemayd"
+#mongodb_password = "proyecto4pds"
+#mongodb_host = "cluster0.o8ztz.mongodb.net"
+#MONGO_CLIENT = MongoClient(f"mongodb://{mongodb_user}:{mongodb_password}@{mongodb_host}")
+#DATABASES = {
+#    "default": {
+#        "ENGINE": "django.db.backends.sqlite3",
+#        "NAME": os.path.join(BASE_DIR, "..", "tb_tutorial.sqlite3"),
+#    }
+#}
+MONGO_CLIENT = MongoClient("mongodb://localhost:27017/")
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -127,4 +133,4 @@ STATIC_URL = '/static/'
 MONGO_DB = MONGO_CLIENT.telegram_bots
 STATIC_ROOT = os.path.join(BASE_DIR, "..", "static_files")
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+#django_heroku.settings(locals())

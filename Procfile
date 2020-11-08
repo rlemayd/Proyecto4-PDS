@@ -1,1 +1,1 @@
-web: gunicorn Proyecto-4-PDS.wsgi
+web: gunicorn telegram_bot.wsgi
