@@ -50,7 +50,8 @@ class TutorialBotView(View):
                 self.send_message(msg, t_chat["id"])
                 cmd = ""
             else:
-                self.send_message(chat[text], t_chat["id"])
+                try:
+                    self.send_message(chat[text], t_chat["id"])
 
         if cmd == "add":
             text = text.split()
