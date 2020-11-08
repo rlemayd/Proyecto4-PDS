@@ -46,7 +46,7 @@ class TutorialBotView(View):
         if cmd == "add":
             text = text.split()
             values = text[1].split("=")
-            if text in chat:
+            if values[0] in chat:
                 new_resp = {values[0]: values[1]}
                 chat.update(new_resp)
                 msg = f"The function {values[0]} was changed to {values[1]}"
