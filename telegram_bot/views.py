@@ -22,6 +22,7 @@ class TutorialBotView(View):
             text = t_message["text"].strip().lower()
         except Exception as e:
             return JsonResponse({"ok": "POST request processed"})
+
         if text[0] == "/":
             text = text.lstrip("/")
             cmd = text.split()[0]
@@ -45,7 +46,7 @@ class TutorialBotView(View):
                 new_resp = {values[0]: values[1]}
                 chat.update(new_resp)
                 telegram_bot_collection.save(chat)
-                msg = "The function {values[0]} was changed to {values[1]}"
+                msg = f"The function {values[0]} was changed to {values[1]}"
                 self.send_message(msg, t_chat["id"])
                 cmd = ""
             else:
@@ -57,12 +58,6 @@ class TutorialBotView(View):
             chat[values[0]] = values[1]
             telegram_bot_collection.save(chat)
             msg = f"Command: {values[0]} added to bot!"
-            self.send_message(msg, t_chat["id"])
-        elif cmd == "restart":
-            blank_data = {"counter": 0}
-            chat.update(blank_data)
-            telegram_bot_collection.save(chat)
-            msg = "The Tutorial bot was restarted"
             self.send_message(msg, t_chat["id"])
         elif cmd == "":
             pass
