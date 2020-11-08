@@ -13,6 +13,6 @@ ALLOWED_HOSTS.append("proyecto-4-rich-kath.herokuapp.com")
 mongodb_user = "rlemayd"
 mongodb_password = "proyecto4pds"
 mongodb_host = "cluster0.o8ztz.mongodb.net/cluster0?retryWrites=true&w=majority"
-MONGO_CLIENT = MongoClient(f"mongodb://{mongodb_user}:{mongodb_password}@{mongodb_host}")
+MONGO_CLIENT = MongoClient(f"mongodb+srv://{mongodb_user}:{mongodb_password}@{mongodb_host}")
 
 MONGO_DB = MONGO_CLIENT.telegram_bot
