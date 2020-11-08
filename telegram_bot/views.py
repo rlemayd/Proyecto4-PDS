@@ -46,15 +46,17 @@ class TutorialBotView(View):
         if cmd == "add":
             text = text.split()
             values = text[1].split("=")
-            if values[0] in chat:
+            if values[0] in chat and len(values) == 2:
                 new_resp = {values[0]: values[1]}
                 chat.update(new_resp)
                 msg = f"The function {values[0]} was changed to {values[1]}"
-            else:
+                telegram_bot_collection.save(chat)
+            elif values[0] not in chat and len(values) == 2:
                 chat[values[0]] = values[1]
                 msg = f"Command: {values[0]} added to bot!"
-
-            telegram_bot_collection.save(chat)
+                telegram_bot_collection.save(chat)
+            else:  
+                msg = f"Incorrect format of command: {values[0]}! \n The correct format is /add commandName=commandValue"
             self.send_message(msg, t_chat["id"])
 
         elif cmd == "":
