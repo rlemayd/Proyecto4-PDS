@@ -40,28 +40,26 @@ class TutorialBotView(View):
             chat["_id"] = response.inserted_id
         
         else:
-            if cmd != "":
-                text = text.split()
-                values = text[1].split("=")
-                new_resp = {values[0]: values[1]}
-                chat.update(new_resp)
-                telegram_bot_collection.save(chat)
-                msg = f"The function {values[0]} was changed to {values[1]}"
-                self.send_message(msg, t_chat["id"])
-                cmd = ""
-            else:
-                if text in chat:
-                    self.send_message(chat[text], t_chat["id"])
+            if cmd == "" and text in chat:
+                self.send_message(chat[text], t_chat["id"])
 
         if cmd == "add":
             text = text.split()
             values = text[1].split("=")
-            chat[values[0]] = values[1]
+            if text in chat:
+                new_resp = {values[0]: values[1]}
+                chat.update(new_resp)
+                msg = f"The function {values[0]} was changed to {values[1]}"
+            else:
+                chat[values[0]] = values[1]
+                msg = f"Command: {values[0]} added to bot!"
+
             telegram_bot_collection.save(chat)
-            msg = f"Command: {values[0]} added to bot!"
             self.send_message(msg, t_chat["id"])
+
         elif cmd == "":
             pass
+
         else:
             msg = "Unknown command"
             self.send_message(msg, t_chat["id"])
