@@ -22,8 +22,14 @@ class TutorialBotView(View):
         except Exception as e:
             return JsonResponse({"ok": "POST request processed"})
         if text[0] == "/":
-            print("----------------------------")
-            print(t_chat)
+            if not telegram_bot_collection.find_one({"chat_id": t_chat["id"]}):
+                text.lstrip("/")
+                phrase = text.split("=")
+                resp = {
+                            "chat_id": t_chat["id"],
+                            phrase[0]:phrase[1]
+                        }
+                response = telegram_bot_collection.insert_one(resp)
         text = text.lstrip("/")
         print(text)
         chat = telegram_bot_collection.find_one({"chat_id": t_chat["id"]})
