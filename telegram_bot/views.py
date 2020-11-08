@@ -26,6 +26,7 @@ class TutorialBotView(View):
             cmd = text.split()[0]
         else:
             text = text.lstrip("/")
+
         chat = telegram_bot_collection.find_one({"chat_id": t_chat["id"]})
 
         if not chat:
@@ -43,7 +44,9 @@ class TutorialBotView(View):
 
         if cmd == "add":
             values = text[1].split("=")
+            print("EL COMANDO ES ADD")
             print(text)
+            print(values)
             #chat[values[0]] = values[1]
             #telegram_bot_collection.save(chat)
             #msg = f"Command: {values[0]} added to bot!"
