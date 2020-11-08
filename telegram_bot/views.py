@@ -56,7 +56,7 @@ class TutorialBotView(View):
                 msg = f"Command: {values[0]} added to bot!"
                 telegram_bot_collection.save(chat)
             else:  
-                msg = f"Incorrect format of command: {values[0]}! \n The correct format is /add commandName=commandValue"
+                msg = f"Incorrect format of command: {values[0]}! \nThe correct format is /add commandName=commandValue"
             self.send_message(msg, t_chat["id"])
 
         elif cmd == "":
