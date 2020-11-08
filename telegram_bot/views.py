@@ -43,10 +43,11 @@ class TutorialBotView(View):
 
         if cmd == "add":
             values = text[1].split("=")
-            chat[values[0]] = values[1]
-            telegram_bot_collection.save(chat)
-            msg = f"Command: {values[0]} added to bot!"
-            self.send_message(msg, t_chat["id"])
+            print(text)
+            #chat[values[0]] = values[1]
+            #telegram_bot_collection.save(chat)
+            #msg = f"Command: {values[0]} added to bot!"
+            #self.send_message(msg, t_chat["id"])
         elif text == "restart":
             blank_data = {"counter": 0}
             chat.update(blank_data)
