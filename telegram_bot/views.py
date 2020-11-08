@@ -23,7 +23,7 @@ class TutorialBotView(View):
             return JsonResponse({"ok": "POST request processed"})
         if text[0] == "/":
             print("----------------------------")
-            print("Es un comando")
+            print(t_chat)
         text = text.lstrip("/")
         print(text)
         chat = telegram_bot_collection.find_one({"chat_id": t_chat["id"]})
