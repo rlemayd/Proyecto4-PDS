@@ -22,30 +22,30 @@ class TutorialBotView(View):
         except Exception as e:
             return JsonResponse({"ok": "POST request processed"})
         if text[0] == "/":
-            if not telegram_bot_collection.find_one({"chat_id": t_chat["id"]}):
-                text.lstrip("/")
-                phrase = text.split("=")
-                resp = {
-                            "chat_id": t_chat["id"],
-                            phrase[0]:phrase[1]
-                        }
-                response = telegram_bot_collection.insert_one(resp)
-        text = text.lstrip("/")
-        print(text)
+            text = text.lstrip("/")
+            cmd = text.split()[0]
+        else:
+            text = text.lstrip("/")
         chat = telegram_bot_collection.find_one({"chat_id": t_chat["id"]})
+
         if not chat:
             chat = {
-                "chat_id": t_chat["id"],
-                "counter": 0
+                "chat_id": t_chat["id"]
             }
             response = telegram_bot_collection.insert_one(chat)
             # we want chat obj to be the same as fetched from collection
             chat["_id"] = response.inserted_id
+        
+        else:
+            if chat[text]:
+                print(chat[text])
+                self.send_message(chat[text], t_chat["id"])
 
-        if text == "+":
-            chat["counter"] += 1
+        if cmd == "add":
+            values = text[1].split("=")
+            chat[values[0]] = values[1]
             telegram_bot_collection.save(chat)
-            msg = f"Number of '+' messages that were parsed: {chat['counter']}"
+            msg = f"Command: {values[0]} added to bot!"
             self.send_message(msg, t_chat["id"])
         elif text == "restart":
             blank_data = {"counter": 0}
