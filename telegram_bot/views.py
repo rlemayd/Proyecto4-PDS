@@ -40,6 +40,9 @@ class TutorialBotView(View):
             chat["_id"] = response.inserted_id
         
         else:
+            print("Revistando chat ", chat)
+            print(text)
+            print(text in chat)
             if cmd == "" and text in chat:
                 self.send_message(chat[text], t_chat["id"])
 
