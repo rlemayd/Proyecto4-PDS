@@ -15,6 +15,7 @@ TUTORIAL_BOT_TOKEN = "1233503709:AAE4fJsZTy2_AVtXOlOywOX_M18HbIonoEQ"
 class TutorialBotView(View):
     def post(self, request, *args, **kwargs):
         t_data = json.loads(request.body)
+        print(t_data)
         t_message = {}
         if "message" in t_data:
             t_message = t_data["message"]
