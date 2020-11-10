@@ -135,7 +135,7 @@ class TutorialBotView(View):
             else:
                 chat["messages"].update({text: chat["messages"][text] + 1})
                 telegram_bot_collection.save(chat)
-            chat["last_message"].update({text})
+            chat["last_message"].update(text)
             telegram_bot_collection.save(chat)
 
         else:
