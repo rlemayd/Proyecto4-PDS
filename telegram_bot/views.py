@@ -39,7 +39,7 @@ class TutorialBotView(View):
 
         if not chat:
             chat = {
-                "chat_id": t_chat["id"]
+                "chat_id": t_chat["id"],
                 "words":{}
             }
             response = telegram_bot_collection.insert_one(chat)
