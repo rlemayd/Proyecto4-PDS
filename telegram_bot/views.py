@@ -123,6 +123,12 @@ class TutorialBotView(View):
             else:
                 chat["chars"].update({str(dateObtained):chat["chars"][str(dateObtained)] + len(text)})
                 telegram_bot_collection.save(chat)
+            for i in text.split():
+                if i not in chat["messages"]:
+                    chat["messages"][i] = 1
+                else:
+                    chat["messages"].update({i: chat["messages"][i] + 1})
+                telegram_bot_collection.save(chat)
 
         else:
             msg = "Unknown command"
