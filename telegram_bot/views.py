@@ -131,9 +131,10 @@ class TutorialBotView(View):
                 telegram_bot_collection.save(chat)
             if text not in chat["messages"]:
                 chat["messages"][text] = 1
+                telegram_bot_collection.save(chat)
             else:
                 chat["messages"].update({text: chat["messages"][text] + 1})
-            
+                telegram_bot_collection.save(chat)
 
         else:
             msg = "Unknown command"
