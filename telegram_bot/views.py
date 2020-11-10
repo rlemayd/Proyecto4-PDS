@@ -4,6 +4,7 @@ import requests
 import numpy as np
 from django.http import JsonResponse
 from django.views import View
+from datetime import date
 
 from .models import telegram_bot_collection
 
@@ -41,7 +42,13 @@ class TutorialBotView(View):
         if not chat:
             chat = {
                 "chat_id": t_chat["id"],
-                "words":{}
+                "added_commands":{},
+                "group_members":{},
+                "words": {},
+                "chars": {},
+                "all_words": {},
+                "messages": {},
+                "last_message": ""
             }
             response = telegram_bot_collection.insert_one(chat)
             # we want chat obj to be the same as fetched from collection
@@ -50,20 +57,20 @@ class TutorialBotView(View):
         else:
             words = []
             for i in text.split():                
-                if cmd == "" and i in chat["words"] and i not in words:
+                if cmd == "" and i in chat["added_commands"] and i not in words:
                     words.append(i)
-                    self.send_message(chat["words"][i], t_chat["id"])
+                    self.send_message(chat["added_commands"][i], t_chat["id"])
 
         if cmd == "add":
             text = text.split()
             values = text[1].split("=")
-            if values[0] in chat["words"] and len(values) == 2:
+            if values[0] in chat["added_commands"] and len(values) == 2:
                 new_resp = {values[0]: values[1]}
-                chat["words"].update(new_resp)
+                chat["added_commands"].update(new_resp)
                 msg = f"The function {values[0]} was changed to {values[1]}"
                 telegram_bot_collection.save(chat)
-            elif values[0] not in chat["words"] and len(values) == 2:
-                chat["words"][values[0]] = values[1]
+            elif values[0] not in chat["added_commands"] and len(values) == 2:
+                chat["added_commands"][values[0]] = values[1]
                 msg = f"Command: {values[0]} added to bot!"
                 telegram_bot_collection.save(chat)
             else:  
@@ -71,7 +78,35 @@ class TutorialBotView(View):
             self.send_message(msg, t_chat["id"])
 
         elif cmd == "":
-            pass
+            if t_message["from"]["id"] not in chat["group_members"]:
+                user_stats = {
+                    datetime.now(): {
+                        "n_messages": 1,
+                        "n_characters": len(text)
+                    },
+                    "last_talked": datetime.datetime.now()
+                }
+                chat["group_members"][t_message["from"]["id"]] = user_stats
+                telegram_bot_collection.save(chat)
+            elif t_message["from"]["id"] in chat["group_members"]:
+                date = datetime.datetime.now()
+                if date not in chat["group_members"][t_message["from"]["id"]]:
+                    user_stats = {
+                        "n_messages": chat["group_members"]["n_messages"] + 1,
+                        "n_characters": chat["group_members"]["n_characters"] + len(text),
+                        "last_time_talked": date,
+                        "n_messages_today": chat["group_members"]["n_messages_today"] + 1,
+                        "n_characters_today": chat["group_members"]["n_characters_today"] + len(text)
+                    }
+                else:
+                    user_stats = {
+                        "n_messages": chat["group_members"]["n_messages"] + 1,
+                        "n_characters": chat["group_members"]["n_characters"] + len(text),
+                        "last_time_talked": date,
+                        "n_messages_today": 1,
+                        "n_characters_today": len(text)
+                    }
+
 
         else:
             msg = "Unknown command"
