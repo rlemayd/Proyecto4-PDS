@@ -110,7 +110,7 @@ class TutorialBotView(View):
                         "last_talked": str(dateObtained)
                     }
                     chat["group_members"][str(t_message["from"]["id"])][str(dateObtained)].update(user_stats)
-
+                    telegram_bot_collection.save(chat)
 
         else:
             msg = "Unknown command"
