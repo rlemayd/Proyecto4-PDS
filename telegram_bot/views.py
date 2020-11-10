@@ -146,7 +146,7 @@ class TutorialBotView(View):
                     searched_date = str(date.date.today()-date.timedelta(days=q))
                     if chat["group_members"][i][searched_date]["n_messages"] > most_messages:
                         user_q2 = [i]
-                        most_messages = hat["group_members"][i][searched_date]["n_messages"]
+                        most_messages = chat["group_members"][i][searched_date]["n_messages"]
                     elif hat["group_members"][i][searched_date]["n_messages"] == most_messages:
                         user_q2.append(i)
             if len(user_q2)==1:
