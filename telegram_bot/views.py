@@ -142,11 +142,13 @@ class TutorialBotView(View):
             most_messages = -1
             user_q2 = []
             for i in chat["group_members"]:
-                if chat["group_members"][i]["n_messages"] > most_messages:
-                    user_q2 = [i]
-                    most_messages = chat["group_members"][i]["n_messages"]
-                elif chat["group_members"][i]["n_messages"] == most_messages:
-                    user_q2.append(i)
+                for q in range(7):
+                    searched_date = str(date.today()-date.timedelta(days=q))
+                    if chat["group_members"][i][searched_date]["n_messages"] > most_messages:
+                        user_q2 = [i]
+                        most_messages = hat["group_members"][i][searched_date]["n_messages"]
+                    elif hat["group_members"][i][searched_date]["n_messages"] == most_messages:
+                        user_q2.append(i)
             if len(user_q2)==1:
                 msg = f"The user with most messages is {user_q2[0]} with {most_messages}"
                 self.send_message(msg, t_chat["id"])
