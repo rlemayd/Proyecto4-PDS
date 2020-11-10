@@ -78,21 +78,22 @@ class TutorialBotView(View):
             self.send_message(msg, t_chat["id"])
 
         elif cmd == "":
+            dateObtained = date.today()
             if t_message["from"]["id"] not in chat["group_members"]:
                 user_stats = {
-                    date.today(): {
+                    str(dateObtained): {
                         "n_messages": 1,
                         "n_characters": len(text)
                     },
-                    "last_talked": date.today()
+                    "last_talked": dateObtained
                 }
                 chat["group_members"][t_message["from"]["id"]] = user_stats
                 telegram_bot_collection.save(chat)
             elif t_message["from"]["id"] in chat["group_members"]:
-                dateObtained = date.today()
-                if dateObtained not in chat["group_members"][t_message["from"]["id"]]:
+                
+                if str(dateObtained) not in chat["group_members"][t_message["from"]["id"]]:
                     user_stats = {
-                        dateObtained: {
+                        str(dateObtained): {
                             "n_messages": 1,
                             "n_characters": len(text)
                         },
@@ -102,7 +103,7 @@ class TutorialBotView(View):
                     telegram_bot_collection.save(chat)
                 else:
                     user_stats = {
-                        dateObtained: {
+                        str(dateObtained): {
                             "n_messages": chat["group_members"][t_message["from"]["id"]][str(dateObtained)]["n_messages"] + 1,
                             "n_characters": chat["group_members"][t_message["from"]["id"]][str(dateObtained)]["n_characters"] + len(text)
                         },
