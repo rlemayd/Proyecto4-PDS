@@ -111,7 +111,7 @@ class TutorialBotView(View):
                     }
                     chat["group_members"][str(t_message["from"]["id"])].update(user_stats)
                     telegram_bot_collection.save(chat)
-            if dateObtained not in chat["words"]:
+            if str(dateObtained) not in chat["words"]:
                 chat["words"][str(dateObtained)] = 1
                 telegram_bot_collection.save(chat)
             else:
