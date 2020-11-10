@@ -44,6 +44,8 @@ class TutorialBotView(View):
             print(np.unique(np.array(text.split())))
             for i in np.unique(np.array(text.split())):
                 print(i)
+                print(chat)
+                print(i in chat)
                 if cmd == "" and i in chat:
                     self.send_message(chat[i], t_chat["id"])
 
