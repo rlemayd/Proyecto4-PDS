@@ -85,7 +85,7 @@ class TutorialBotView(View):
                         "n_messages": 1,
                         "n_characters": len(text)
                     },
-                    "last_talked": dateObtained
+                    "last_talked": str(dateObtained)
                 }
                 chat["group_members"][str(t_message["from"]["id"])] = user_stats
                 telegram_bot_collection.save(chat)
@@ -97,7 +97,7 @@ class TutorialBotView(View):
                             "n_messages": 1,
                             "n_characters": len(text)
                         },
-                        "last_talked": dateObtained
+                        "last_talked": str(dateObtained)
                     }
                     chat["group_members"][str(t_message["from"]["id"])] = user_stats
                     telegram_bot_collection.save(chat)
@@ -107,7 +107,7 @@ class TutorialBotView(View):
                             "n_messages": chat["group_members"][str(t_message["from"]["id"])][str(dateObtained)]["n_messages"] + 1,
                             "n_characters": chat["group_members"][str(t_message["from"]["id"])][str(dateObtained)]["n_characters"] + len(text)
                         },
-                        "last_talked": dateObtained
+                        "last_talked": str(dateObtained)
                     }
                     chat["group_members"][str(t_message["from"]["id"])][str(dateObtained)].update(user_stats)
 
