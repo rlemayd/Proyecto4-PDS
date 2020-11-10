@@ -89,26 +89,26 @@ class TutorialBotView(View):
                 chat["group_members"][t_message["from"]["id"]] = user_stats
                 telegram_bot_collection.save(chat)
             elif t_message["from"]["id"] in chat["group_members"]:
-                date = date.today()
-                if date not in chat["group_members"][t_message["from"]["id"]]:
+                dateObtained = date.today()
+                if dateObtained not in chat["group_members"][t_message["from"]["id"]]:
                     user_stats = {
-                        date.today(): {
+                        dateObtained: {
                             "n_messages": 1,
                             "n_characters": len(text)
                         },
-                        "last_talked": date.today()
+                        "last_talked": dateObtained
                     }
                     chat["group_members"][t_message["from"]["id"]] = user_stats
                     telegram_bot_collection.save(chat)
                 else:
                     user_stats = {
-                        date.today(): {
-                            "n_messages": chat["group_members"][t_message["from"]["id"]][str(date)]["n_messages"] + 1,
-                            "n_characters": chat["group_members"][t_message["from"]["id"]][str(date)]["n_characters"] + len(text)
+                        dateObtained: {
+                            "n_messages": chat["group_members"][t_message["from"]["id"]][str(dateObtained)]["n_messages"] + 1,
+                            "n_characters": chat["group_members"][t_message["from"]["id"]][str(dateObtained)]["n_characters"] + len(text)
                         },
-                        "last_talked": date.today()
+                        "last_talked": dateObtained
                     }
-                    chat["group_members"][t_message["from"]["id"]][str(date)].update(user_stats)
+                    chat["group_members"][t_message["from"]["id"]][str(dateObtained)].update(user_stats)
 
 
         else:
