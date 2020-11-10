@@ -117,6 +117,12 @@ class TutorialBotView(View):
             else:
                 chat["words"].update({str(dateObtained):chat["words"][str(dateObtained)] + 1})
                 telegram_bot_collection.save(chat)
+            if str(dateObtained) not in chat["chars"]:
+                chat["chars"][str(dateObtained)] = len(text)
+                telegram_bot_collection.save(chat)
+            else:
+                chat["chars"].update({str(dateObtained):chat["chars"][str(dateObtained)] + len(text)})
+                telegram_bot_collection.save(chat)
 
         else:
             msg = "Unknown command"
