@@ -41,7 +41,7 @@ class TutorialBotView(View):
             chat["_id"] = response.inserted_id
         
         else:
-            for i in np.unique(np.array(text.split())))
+            for i in np.unique(np.array(text.split()))
                 if cmd == "" and i in chat:
                     self.send_message(chat[i], t_chat["id"])
 
