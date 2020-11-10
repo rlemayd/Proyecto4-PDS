@@ -78,7 +78,7 @@ class TutorialBotView(View):
             self.send_message(msg, t_chat["id"])
 
         elif cmd == "":
-            dateObtained = date.today()
+            dateObtained = date.date.today()
             if str(t_message["from"]["id"]) not in chat["group_members"]:
                 user_stats = {
                     str(dateObtained): {
@@ -143,7 +143,7 @@ class TutorialBotView(View):
             user_q2 = []
             for i in chat["group_members"]:
                 for q in range(7):
-                    searched_date = str(date.today()-date.timedelta(days=q))
+                    searched_date = str(date.date.today()-date.timedelta(days=q))
                     if chat["group_members"][i][searched_date]["n_messages"] > most_messages:
                         user_q2 = [i]
                         most_messages = hat["group_members"][i][searched_date]["n_messages"]
