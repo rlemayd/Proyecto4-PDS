@@ -20,7 +20,7 @@ class TutorialBotView(View):
             t_message = t_data["message"]
         else:
             print(t_data)
-            #t_message = t_data[""]
+            t_message = t_data["edited_message"]
         t_chat = t_message["chat"]
         cmd = ""
 
@@ -40,6 +40,7 @@ class TutorialBotView(View):
         if not chat:
             chat = {
                 "chat_id": t_chat["id"]
+                "words":{}
             }
             response = telegram_bot_collection.insert_one(chat)
             # we want chat obj to be the same as fetched from collection
@@ -48,20 +49,20 @@ class TutorialBotView(View):
         else:
             words = []
             for i in text.split():                
-                if cmd == "" and i in chat and i not in words:
+                if cmd == "" and i in chat["words"] and i not in words:
                     words.append(i)
-                    self.send_message(chat[i], t_chat["id"])
+                    self.send_message(chat["words"][i], t_chat["id"])
 
         if cmd == "add":
             text = text.split()
             values = text[1].split("=")
-            if values[0] in chat and len(values) == 2:
+            if values[0] in chat["words"] and len(values) == 2:
                 new_resp = {values[0]: values[1]}
-                chat.update(new_resp)
+                chat["words"].update(new_resp)
                 msg = f"The function {values[0]} was changed to {values[1]}"
                 telegram_bot_collection.save(chat)
-            elif values[0] not in chat and len(values) == 2:
-                chat[values[0]] = values[1]
+            elif values[0] not in chat["words"] and len(values) == 2:
+                chat["words"][values[0]] = values[1]
                 msg = f"Command: {values[0]} added to bot!"
                 telegram_bot_collection.save(chat)
             else:  
