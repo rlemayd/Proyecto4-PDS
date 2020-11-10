@@ -80,32 +80,35 @@ class TutorialBotView(View):
         elif cmd == "":
             if t_message["from"]["id"] not in chat["group_members"]:
                 user_stats = {
-                    datetime.now(): {
+                    date.today(): {
                         "n_messages": 1,
                         "n_characters": len(text)
                     },
-                    "last_talked": datetime.datetime.now()
+                    "last_talked": date.today()
                 }
                 chat["group_members"][t_message["from"]["id"]] = user_stats
                 telegram_bot_collection.save(chat)
             elif t_message["from"]["id"] in chat["group_members"]:
-                date = datetime.datetime.now()
+                date = date.today()
                 if date not in chat["group_members"][t_message["from"]["id"]]:
                     user_stats = {
-                        "n_messages": chat["group_members"]["n_messages"] + 1,
-                        "n_characters": chat["group_members"]["n_characters"] + len(text),
-                        "last_time_talked": date,
-                        "n_messages_today": chat["group_members"]["n_messages_today"] + 1,
-                        "n_characters_today": chat["group_members"]["n_characters_today"] + len(text)
+                        date.today(): {
+                            "n_messages": 1,
+                            "n_characters": len(text)
+                        },
+                        "last_talked": date.today()
                     }
+                    chat["group_members"][t_message["from"]["id"]] = user_stats
+                    telegram_bot_collection.save(chat)
                 else:
                     user_stats = {
-                        "n_messages": chat["group_members"]["n_messages"] + 1,
-                        "n_characters": chat["group_members"]["n_characters"] + len(text),
-                        "last_time_talked": date,
-                        "n_messages_today": 1,
-                        "n_characters_today": len(text)
+                        date.today(): {
+                            "n_messages": chat["group_members"][t_message["from"]["id"]][str(date)]["n_messages"] + 1,
+                            "n_characters": chat["group_members"][t_message["from"]["id"]][str(date)]["n_characters"] + len(text)
+                        },
+                        "last_talked": date.today()
                     }
+                    chat["group_members"][t_message["from"]["id"]][str(date)].update(user_stats)
 
 
         else:
