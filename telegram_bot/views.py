@@ -1,6 +1,7 @@
 import json
 import os
 import requests
+import numpy as np
 from django.http import JsonResponse
 from django.views import View
 
@@ -40,11 +41,9 @@ class TutorialBotView(View):
             chat["_id"] = response.inserted_id
         
         else:
-            print("Revistando chat ", chat)
-            print(text)
-            print(text in chat)
-            if cmd == "" and text in chat:
-                self.send_message(chat[text], t_chat["id"])
+            for i in np.unique(np.array(text.split())))
+                if cmd == "" and i in chat:
+                    self.send_message(chat[i], t_chat["id"])
 
         if cmd == "add":
             text = text.split()
