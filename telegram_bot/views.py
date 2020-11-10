@@ -4,7 +4,7 @@ import requests
 import numpy as np
 from django.http import JsonResponse
 from django.views import View
-from datetime as date
+import datetime as date
 
 from .models import telegram_bot_collection
 
