@@ -142,10 +142,10 @@ class TutorialBotView(View):
             most_messages = -1
             user_q2 = []
             for i in chat["group_members"]:
-                if chat[i]["n_messages"] > most_messages:
+                if chat["group_members"][i]["n_messages"] > most_messages:
                     user_q2 = [i]
-                    most_messages = chat[i]["n_messages"]
-                elif chat[i]["n_messages"] == most_messages:
+                    most_messages = chat["group_members"][i]["n_messages"]
+                elif chat["group_members"][i]["n_messages"] == most_messages:
                     user_q2.append(i)
             if len(user_q2)==1:
                 msg = f"The user with most messages is {user_q2[0]} with {most_messages}"
