@@ -15,7 +15,7 @@ TUTORIAL_BOT_TOKEN = "1233503709:AAE4fJsZTy2_AVtXOlOywOX_M18HbIonoEQ"
 
 # https://api.telegram.org/bot<token>/setWebhook?url=<url>/webhooks/tutorial/
 class TutorialBotView(View):
-    def createPlot():
+    def createPlot(self):
         y = [2,4,6,8,10,12,14,16,18,20]
         x = np.arange(10)
         fig = plt.figure()
@@ -260,5 +260,5 @@ class TutorialBotView(View):
             "photo": photo
         }
         response = requests.post(
-            f"{TELEGRAM_URL}{TUTORIAL_BOT_TOKEN}/sendPhoto", data=data, body=body
+            f"{TELEGRAM_URL}{TUTORIAL_BOT_TOKEN}/sendPhoto", data=data, files=body
         )
