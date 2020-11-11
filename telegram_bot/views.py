@@ -5,6 +5,7 @@ import numpy as np
 from django.http import JsonResponse
 from django.views import View
 import datetime as date
+import matplotlib.pyplot as plt
 
 from .models import telegram_bot_collection
 
@@ -14,6 +15,16 @@ TUTORIAL_BOT_TOKEN = "1233503709:AAE4fJsZTy2_AVtXOlOywOX_M18HbIonoEQ"
 
 # https://api.telegram.org/bot<token>/setWebhook?url=<url>/webhooks/tutorial/
 class TutorialBotView(View):
+    def createPlot():
+        y = [2,4,6,8,10,12,14,16,18,20]
+        x = np.arange(10)
+        fig = plt.figure()
+        ax = plt.subplot(111)
+        ax.plot(x, y, label='$y = numbers')
+        plt.title('Legend inside')
+        ax.legend()
+        fig= plt.savefig('plot.png')
+
     def post(self, request, *args, **kwargs):
         t_data = json.loads(request.body)
         print(t_data)
@@ -219,6 +230,10 @@ class TutorialBotView(View):
                 msg = f"There are none users who haven't speaked since {searched_date.date()}"
             self.send_message(msg, t_chat["id"])
 
+        elif cmd== "q5":
+            createPlot()
+            send_photo(open('plot.png','rb'),t_chat["id"])
+
         else:
             msg = "Unknown command"
             self.send_message(msg, t_chat["id"])
@@ -234,4 +249,16 @@ class TutorialBotView(View):
         }
         response = requests.post(
             f"{TELEGRAM_URL}{TUTORIAL_BOT_TOKEN}/sendMessage", data=data
+        )
+
+     @staticmethod
+    def send_photo(photo, chat_id):
+        data = {
+            "chat_id": chat_id
+        }
+        body = {
+            "photo": photo
+        }
+        response = requests.post(
+            f"{TELEGRAM_URL}{TUTORIAL_BOT_TOKEN}/sendPhoto", data=data, body=body
         )
