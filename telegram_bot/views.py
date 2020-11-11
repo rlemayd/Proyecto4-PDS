@@ -206,7 +206,7 @@ class TutorialBotView(View):
             users_innactive = []
             for i in chat["group_members"]:
                 last_time_talked = date.datetime.strptime(chat["group_members"][i]["last_talked"], '%Y-%m-%d')
-                searched_date = str(date.date.today()-date.timedelta(days=time_searched))
+                searched_date = date.date.today()-date.timedelta(days=time_searched)
                 if last_time_talked <= searched_date:
                     users_innactive.append(i)
             if len(users_innactive) > 1:
