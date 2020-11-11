@@ -172,6 +172,32 @@ class TutorialBotView(View):
             else:
                 x = " ".join(user_q2)
                 msg = f"The users with most messages are {x} with {most_messages}"
+                self.send_message(msg, t_chat["id"])
+
+        elif cmd == "q3":
+            most_characters = -1
+            user_q3 = []
+            if cmd_time == -1:
+                time_searched = 7
+            else:
+                time_searched = cmd_time
+            for i in chat["group_members"]:
+                for q in range(time_searched):
+                    searched_date = str(date.date.today()-date.timedelta(days=q))
+                    if searched_date in chat["group_members"][i]:
+                        if chat["group_members"][i][searched_date]["n_characters"] > most_characters:
+                            user_q3 = [i]
+                            most_characters = chat["group_members"][i][searched_date]["n_characters"]
+                        elif hat["group_members"][i][searched_date]["n_characters"] == most_characters:
+                            user_q3.append(i)
+            if len(user_q3)==1:
+                msg = f"The user with most characters is {user_q3[0]} with {most_characters}"
+                self.send_message(msg, t_chat["id"])
+            else:
+                x = " ".join(user_q3)
+                msg = f"The users with most characters are {x} with {most_characters}"
+                self.send_message(msg, t_chat["id"])
+
         else:
             msg = "Unknown command"
             self.send_message(msg, t_chat["id"])
