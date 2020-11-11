@@ -251,7 +251,7 @@ class TutorialBotView(View):
             f"{TELEGRAM_URL}{TUTORIAL_BOT_TOKEN}/sendMessage", data=data
         )
 
-     @staticmethod
+    @staticmethod
     def send_photo(photo, chat_id):
         data = {
             "chat_id": chat_id
