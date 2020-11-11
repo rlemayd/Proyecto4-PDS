@@ -212,11 +212,11 @@ class TutorialBotView(View):
                     users_innactive.append(i)
             if len(users_innactive) > 1:
                 x = " ".join(users_innactive)
-                msg = f"The users who haven't speaked since {date.timedelta(days=time_searched)} are {x}"
+                msg = f"The users who haven't speaked since {searched_date} are {x}"
             elif len(users_innactive) == 1:
-                msg = f"Only one user haven't speaked since {date.timedelta(days=time_searched)} which is {users_innactive[0]}"
+                msg = f"Only one user haven't speaked since {searched_date} which is {users_innactive[0]}"
             else:
-                msg = f"There are none users who haven't speaked since {date.timedelta(days=time_searched)}"
+                msg = f"There are none users who haven't speaked since {searched_date}"
             self.send_message(msg, t_chat["id"])
 
         else:
