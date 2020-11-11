@@ -232,7 +232,7 @@ class TutorialBotView(View):
 
         elif cmd== "q5":
             self.createPlot()
-            send_photo(open('plot.png','rb'),t_chat["id"])
+            self.send_photo(open('plot.png','rb'),t_chat["id"])
 
         else:
             msg = "Unknown command"
