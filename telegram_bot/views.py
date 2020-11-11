@@ -175,7 +175,7 @@ class TutorialBotView(View):
                         if chat["group_members"][i][searched_date]["n_messages"] > most_messages:
                             user_q2 = [i]
                             most_messages = chat["group_members"][i][searched_date]["n_messages"]
-                        elif hat["group_members"][i][searched_date]["n_messages"] == most_messages:
+                        elif chat["group_members"][i][searched_date]["n_messages"] == most_messages:
                             user_q2.append(i)
             if len(user_q2)==1:
                 msg = f"The user with most messages is {user_q2[0]} with {most_messages}"
@@ -199,7 +199,7 @@ class TutorialBotView(View):
                         if chat["group_members"][i][searched_date]["n_characters"] > most_characters:
                             user_q3 = [i]
                             most_characters = chat["group_members"][i][searched_date]["n_characters"]
-                        elif hat["group_members"][i][searched_date]["n_characters"] == most_characters:
+                        elif chat["group_members"][i][searched_date]["n_characters"] == most_characters:
                             user_q3.append(i)
             if len(user_q3)==1:
                 msg = f"The user with most characters is {user_q3[0]} with {most_characters}"
