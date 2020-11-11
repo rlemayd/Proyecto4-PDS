@@ -231,7 +231,7 @@ class TutorialBotView(View):
             self.send_message(msg, t_chat["id"])
 
         elif cmd== "q5":
-            createPlot()
+            self.createPlot()
             send_photo(open('plot.png','rb'),t_chat["id"])
 
         else:
