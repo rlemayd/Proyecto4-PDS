@@ -18,10 +18,11 @@ class TutorialBotView(View):
         t_data = json.loads(request.body)
         print(t_data)
         t_message = {}
+        # If it's a normal message
         if "message" in t_data:
             t_message = t_data["message"]
+        # If it's a editted message
         else:
-            print(t_data)
             t_message = t_data["edited_message"]
         t_chat = t_message["chat"]
         cmd = ""
@@ -31,14 +32,25 @@ class TutorialBotView(View):
         except Exception as e:
             return JsonResponse({"ok": "POST request processed"})
 
+        # If the message it's a command
+        cmd_time = -1
         if text[0] == "/":
             text = text.lstrip("/")
-            cmd = text.split()[0]
+            cmd = text.split()
+            if len(cmd) == 1:
+                cmd = cmd[0]
+            elif len(cmd) == 2:
+                cmd_time = cmd[1]
+                cmd = cmd[0]
+
+        #Normal message
         else:
             text = text.lstrip("/")
 
+        # Obtain data from DB
         chat = telegram_bot_collection.find_one({"chat_id": t_chat["id"]})
 
+        # If DB doesn't contain the chat id
         if not chat:
             chat = {
                 "chat_id": t_chat["id"],
@@ -141,8 +153,12 @@ class TutorialBotView(View):
         elif cmd == "q2":
             most_messages = -1
             user_q2 = []
+            if cmd_time == -1:
+                time_searched = 7
+            else:
+                time_searched = cmd_time
             for i in chat["group_members"]:
-                for q in range(7):
+                for q in range(time_searched):
                     searched_date = str(date.date.today()-date.timedelta(days=q))
                     if searched_date in chat["group_members"][i]:
                         if chat["group_members"][i][searched_date]["n_messages"] > most_messages:
