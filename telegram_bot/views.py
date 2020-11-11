@@ -198,6 +198,26 @@ class TutorialBotView(View):
                 msg = f"The users with most characters are {x} with {most_characters}"
                 self.send_message(msg, t_chat["id"])
 
+        elif cmd == "q4":
+            if cmd_time == -1:
+                time_searched = 7
+            else:
+                time_searched = cmd_time
+            users_innactive = []
+            for i in chat["group_members"]:
+                last_time_talked = datetime.strptime(chat["group_members"][i]["last_talked"], '%m/%d/%y %H:%M:%S')
+                searched_date = str(date.date.today()-date.timedelta(days=time_searched))
+                if last_time_talked <= searched_date:
+                    users_innactive.append(i)
+            if len(users_innactive) > 1:
+                x = " ".join(users_innactive)
+                msg = f"The users who haven't speaked since {date.timedelta(days=time_searched)} are {x}"
+            elif len(users_innactive) == 1:
+                msg = f"Only one user haven't speaked since {date.timedelta(days=time_searched)} which is {users_innactive[0]}"
+            else:
+                msg = f"There are none users who haven't speaked since {date.timedelta(days=time_searched)}"
+            self.send_message(msg, t_chat["id"])
+
         else:
             msg = "Unknown command"
             self.send_message(msg, t_chat["id"])
