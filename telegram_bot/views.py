@@ -222,7 +222,7 @@ class TutorialBotView(View):
                 if last_time_talked <= searched_date:
                     users_innactive.append(i)
             if len(users_innactive) > 1:
-                x = " ".join(users_innactive)
+                x = ", ".join(users_innactive)
                 msg = f"The users who haven't speaked since {searched_date.date()} are {x}"
             elif len(users_innactive) == 1:
                 msg = f"Only one user haven't speaked since {searched_date.date()} which is {users_innactive[0]}"
