@@ -181,7 +181,7 @@ class TutorialBotView(View):
                 msg = f"The user with most messages is {user_q2[0]} with {most_messages}"
                 self.send_message(msg, t_chat["id"])
             else:
-                x = " ".join(user_q2)
+                x = ", ".join(user_q2)
                 msg = f"The users with most messages are {x} with {most_messages}"
                 self.send_message(msg, t_chat["id"])
 
@@ -205,7 +205,7 @@ class TutorialBotView(View):
                 msg = f"The user with most characters is {user_q3[0]} with {most_characters}"
                 self.send_message(msg, t_chat["id"])
             else:
-                x = " ".join(user_q3)
+                x = ", ".join(user_q3)
                 msg = f"The users with most characters are {x} with {most_characters}"
                 self.send_message(msg, t_chat["id"])
 
