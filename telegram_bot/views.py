@@ -116,23 +116,21 @@ class TutorialBotView(View):
                 
                 if str(dateObtained) not in chat["group_members"][str(t_message["from"]["id"])]:
                     user_stats = {
-                        str(dateObtained): {
                             "n_messages": 1,
                             "n_characters": len(text)
-                        },
-                        "last_talked": str(dateObtained)
-                    }
-                    chat["group_members"][str(t_message["from"]["id"])] = user_stats
+                        }
+                    chat["group_members"][str(t_message["from"]["id"])][str(dateObtained)] = user_stats
+                    chat["group_members"][str(t_message["from"]["id"])].update("last_talked": str(dateObtained))
                     telegram_bot_collection.save(chat)
+
+                        
                 else:
                     user_stats = {
-                        str(dateObtained): {
                             "n_messages": chat["group_members"][str(t_message["from"]["id"])][str(dateObtained)]["n_messages"] + 1,
                             "n_characters": chat["group_members"][str(t_message["from"]["id"])][str(dateObtained)]["n_characters"] + len(text)
-                        },
-                        "last_talked": str(dateObtained)
-                    }
-                    chat["group_members"][str(t_message["from"]["id"])].update(user_stats)
+                        }
+                    chat["group_members"][str(t_message["from"]["id"])][str(dateObtained)].update(user_stats)
+                    chat["group_members"][str(t_message["from"]["id"])].update("last_talked": str(dateObtained))
                     telegram_bot_collection.save(chat)
             if str(dateObtained) not in chat["words"]:
                 chat["words"][str(dateObtained)] = 1
@@ -231,6 +229,16 @@ class TutorialBotView(View):
             self.send_message(msg, t_chat["id"])
 
         elif cmd== "q5":
+            if cmd_time == -1:
+                time_searched = 7
+            else:
+                time_searched = cmd_time
+            users_innactive = {}
+            for i in chat["group_members"]:
+                last_time_talked = date.datetime.strptime(chat["group_members"][i]["last_talked"], '%Y-%m-%d')
+                searched_date = date.date.today()-date.timedelta(days=time_searched)
+                searched_date = date.datetime.strptime(str(searched_date), '%Y-%m-%d')
+                if last_time_talked <= searched_date and users_innactive:
             self.createPlot()
             self.send_photo(open('plot.png','rb'),t_chat["id"])
 
