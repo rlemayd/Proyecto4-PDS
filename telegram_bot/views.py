@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.views import View
 import datetime as date
 import matplotlib.pyplot as plt
+from wordcloud import WordCloud
 
 from .models import telegram_bot_collection
 
@@ -23,6 +24,13 @@ class TutorialBotView(View):
         plt.xlabel(f"{xlabel}")
         plt.ylabel("Quantity")
         plt.savefig(f'{fig}.png')
+
+    def createCloudPlot(self, data):
+        wc = WordCloud(background_color="white",width=1000,height=1000,relative_scaling=0.5,normalize_plurals=False).generate_from_frequencies(data)
+        plt.imshow(wc)
+        plt.axis("off")
+        plt.tight_layout(pad = 0)
+        plt.savefig('Clouds.png')
 
     def post(self, request, *args, **kwargs):
         t_data = json.loads(request.body)
