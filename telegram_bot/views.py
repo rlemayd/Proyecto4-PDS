@@ -171,7 +171,7 @@ class TutorialBotView(View):
                     searched_date = str(date.date.today()-date.timedelta(days=q))
                     if searched_date in chat["group_members"][i]:
                         if i in user_q2:
-                            user_q2.i += chat["group_members"][i][searched_date]["n_messages"]
+                            user_q2[i] += chat["group_members"][i][searched_date]["n_messages"]
                         else:
                             user_q2[i] = chat["group_members"][i][searched_date]["n_messages"]
             itemMaxValue = max(user_q2.items(), key=lambda x: x[1])
