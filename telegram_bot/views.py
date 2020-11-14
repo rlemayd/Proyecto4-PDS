@@ -238,7 +238,7 @@ class TutorialBotView(View):
                 for t in chat["group_members"][i]:
                     date_in_loop = ""
                     if t != "last_talked":
-                        date_in_loop = date.datetime.strptime(chat["group_members"][i][t], '%Y-%m-%d')
+                        date_in_loop = date.datetime.strptime(t, '%Y-%m-%d')
                     searched_date = date.date.today()-date.timedelta(days=time_searched)
                     searched_date = date.datetime.strptime(str(searched_date), '%Y-%m-%d')
                     if date_in_loop >= searched_date:
