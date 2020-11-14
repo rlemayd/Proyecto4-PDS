@@ -176,7 +176,8 @@ class TutorialBotView(View):
                         elif chat["group_members"][i][searched_date]["n_messages"] == most_messages:
                             user_q2.append(i)
             if len(user_q2)==1:
-                msg = f"The user with most messages is {self.get_user(t_chat["id"], user_q2[0])} with {most_messages}"
+                x = self.get_user(t_chat["id"], user_q2[0])
+                msg = f"The user with most messages is {x} with {most_messages}"
                 self.send_message(msg, t_chat["id"])
             else:
                 x = ""
