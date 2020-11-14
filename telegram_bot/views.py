@@ -287,7 +287,7 @@ class TutorialBotView(View):
             "chat_id": chat_id,
             "user_id": user_id
         }
-        response = requests.post(
+        response = requests.get(
             f"{TELEGRAM_URL}{TUTORIAL_BOT_TOKEN}/getChatMember", data=data
         )
         print(response)
