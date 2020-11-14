@@ -253,7 +253,7 @@ class TutorialBotView(View):
                         searched_date = date.datetime.strptime(str(searched_date), '%Y-%m-%d')
                         if date_in_loop >= searched_date:
                             if t in messages_per_day:
-                                messages_per_day.t += chat["group_members"][i][t]["n_messages"]
+                                messages_per_day[t] += chat["group_members"][i][t]["n_messages"]
                             else:
                                 messages_per_day[t] = chat["group_members"][i][t]["n_messages"]
         
@@ -274,12 +274,33 @@ class TutorialBotView(View):
                         searched_date = date.datetime.strptime(str(searched_date), '%Y-%m-%d')
                         if date_in_loop >= searched_date:
                             if t in chars_per_day:
-                                chars_per_day.t += chat["group_members"][i][t]["n_characters"]
+                                chars_per_day[t] += chat["group_members"][i][t]["n_characters"]
                             else:
                                 chars_per_day[t] = chat["group_members"][i][t]["n_characters"]
         
             self.createPlot(chars_per_day, "characters", "day", "Dates", "CharactersPerDay")
             self.send_photo(open('CharactersPerDay.png','rb'),t_chat["id"])
+
+        elif cmd== "q7":
+            if cmd_time == -1:
+                time_searched = 7
+            else:
+                time_searched = cmd_time
+            chars_per_user = {}
+            for i in chat["group_members"]:
+                for t in chat["group_members"][i]:
+                    if t != "last_talked":
+                        date_in_loop = date.datetime.strptime(t, '%Y-%m-%d')
+                        searched_date = date.date.today()-date.timedelta(days=time_searched)
+                        searched_date = date.datetime.strptime(str(searched_date), '%Y-%m-%d')
+                        if date_in_loop >= searched_date:
+                            if i in chars_per_user:
+                                chars_per_user[i] += chat["group_members"][i][t]["n_messages"]
+                            else:
+                                chars_per_user[i] = chat["group_members"][i][t]["n_messages"]
+        
+            self.createPlot(chars_per_user, "messages", "user", "Users", "MessagesPerUser")
+            self.send_photo(open('MessagesPerUser.png','rb'),t_chat["id"])
 
         else:
             msg = "Unknown command"
