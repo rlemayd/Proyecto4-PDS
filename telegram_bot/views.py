@@ -236,16 +236,15 @@ class TutorialBotView(View):
             messages_per_day = {}
             for i in chat["group_members"]:
                 for t in chat["group_members"][i]:
-                    date_in_loop = ""
                     if t != "last_talked":
                         date_in_loop = date.datetime.strptime(t, '%Y-%m-%d')
-                    searched_date = date.date.today()-date.timedelta(days=time_searched)
-                    searched_date = date.datetime.strptime(str(searched_date), '%Y-%m-%d')
-                    if date_in_loop >= searched_date:
-                        if t in messages_per_day:
-                            messages_per_day.t += chat["group_members"][i][t]["n_messages"]
-                        else:
-                            messages_per_day[t] = chat["group_members"][i][t]["n_messages"]
+                        searched_date = date.date.today()-date.timedelta(days=time_searched)
+                        searched_date = date.datetime.strptime(str(searched_date), '%Y-%m-%d')
+                        if date_in_loop >= searched_date:
+                            if t in messages_per_day:
+                                messages_per_day.t += chat["group_members"][i][t]["n_messages"]
+                            else:
+                                messages_per_day[t] = chat["group_members"][i][t]["n_messages"]
             print(messages_per_day)
             self.createPlot()
             self.send_photo(open('plot.png','rb'),t_chat["id"])
