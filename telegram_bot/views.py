@@ -15,15 +15,14 @@ TUTORIAL_BOT_TOKEN = "1233503709:AAE4fJsZTy2_AVtXOlOywOX_M18HbIonoEQ"
 
 # https://api.telegram.org/bot<token>/setWebhook?url=<url>/webhooks/tutorial/
 class TutorialBotView(View):
-    def createPlot(self):
-        y = [2,4,6,8,10,12,14,16,18,20]
-        x = np.arange(10)
-        fig = plt.figure()
-        ax = plt.subplot(111)
-        ax.plot(x, y, label='$y = numbers')
-        plt.title('Legend inside')
-        ax.legend()
-        fig= plt.savefig('plot.png')
+    def createPlot(self, data, searched, dayOrUser, xlabel, fig):
+        dates = list(data.keys())
+        msg= list(data.values())
+        plt.bar(range(len(data)),msg,tick_label=dates)
+        plt.title(f"Number of {searched} per {dayOrUser}")
+        plt.xlabel(f"{xlabel}")
+        plt.ylabel("Quantity")
+        plt.savefig(f'{fig}.png')
 
     def post(self, request, *args, **kwargs):
         t_data = json.loads(request.body)
@@ -257,8 +256,8 @@ class TutorialBotView(View):
                                 messages_per_day.t += chat["group_members"][i][t]["n_messages"]
                             else:
                                 messages_per_day[t] = chat["group_members"][i][t]["n_messages"]
-            print(messages_per_day)
-            self.createPlot()
+        
+            self.createPlot(messages_per_day, "messages", "day", "Dates", "MessagesPerDay")
             self.send_photo(open('plot.png','rb'),t_chat["id"])
 
         else:
