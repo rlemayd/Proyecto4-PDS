@@ -258,7 +258,7 @@ class TutorialBotView(View):
                                 messages_per_day[t] = chat["group_members"][i][t]["n_messages"]
         
             self.createPlot(messages_per_day, "messages", "day", "Dates", "MessagesPerDay")
-            self.send_photo(open('plot.png','rb'),t_chat["id"])
+            self.send_photo(open('MessagesPerDay.png','rb'),t_chat["id"])
 
         else:
             msg = "Unknown command"
