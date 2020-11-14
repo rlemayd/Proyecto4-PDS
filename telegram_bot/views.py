@@ -161,7 +161,7 @@ class TutorialBotView(View):
 
         elif cmd == "q2":
             most_messages = -1
-            user_q2 = []
+            user_q2 = {}
             if cmd_time == -1:
                 time_searched = 7
             else:
@@ -170,18 +170,22 @@ class TutorialBotView(View):
                 for q in range(time_searched):
                     searched_date = str(date.date.today()-date.timedelta(days=q))
                     if searched_date in chat["group_members"][i]:
-                        if chat["group_members"][i][searched_date]["n_messages"] > most_messages:
-                            user_q2 = [i]
-                            most_messages = chat["group_members"][i][searched_date]["n_messages"]
-                        elif chat["group_members"][i][searched_date]["n_messages"] == most_messages:
-                            user_q2.append(i)
-            if len(user_q2)==1:
-                x = self.get_user(t_chat["id"], user_q2[0])
+                        if i in user_q2:
+                            user_q2.i += chat["group_members"][i][searched_date]["n_messages"]
+                        else:
+                            user_q2[i] = chat["group_members"][i][searched_date]["n_messages"]
+            itemMaxValue = max(user_q2.items(), key=lambda x: x[1])
+            listOfKeys = list()
+            for key, value in user_q2.items():
+                if value == itemMaxValue[1]:
+                    listOfKeys.append(key)
+            if len(listOfKeys)==1:
+                x = self.get_user(t_chat["id"], listOfKeys[0])
                 msg = f"The user with most messages is {x} with {most_messages}"
                 self.send_message(msg, t_chat["id"])
             else:
                 x = ""
-                for i in user_q2:
+                for i in listOfKeys:
                     x += self.get_user(t_chat["id"], i) + ", "
                 msg = f"The users with most messages are {x} with {most_messages}"
                 self.send_message(msg, t_chat["id"])
