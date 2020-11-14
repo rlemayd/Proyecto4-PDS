@@ -277,7 +277,7 @@ class TutorialBotView(View):
                                 chars_per_day[t] += chat["group_members"][i][t]["n_characters"]
                             else:
                                 chars_per_day[t] = chat["group_members"][i][t]["n_characters"]
-        
+            
             self.createPlot(chars_per_day, "characters", "day", "Dates", "CharactersPerDay")
             self.send_photo(open('CharactersPerDay.png','rb'),t_chat["id"])
 
@@ -294,10 +294,11 @@ class TutorialBotView(View):
                         searched_date = date.date.today()-date.timedelta(days=time_searched)
                         searched_date = date.datetime.strptime(str(searched_date), '%Y-%m-%d')
                         if date_in_loop >= searched_date:
-                            if i in chars_per_user:
-                                chars_per_user[i] += chat["group_members"][i][t]["n_messages"]
+                            user = self.get_user(t_chat["id"], i)
+                            if user in chars_per_user:
+                                chars_per_user[user] += chat["group_members"][i][t]["n_messages"]
                             else:
-                                chars_per_user[i] = chat["group_members"][i][t]["n_messages"]
+                                chars_per_user[user] = chat["group_members"][i][t]["n_messages"]
         
             self.createPlot(chars_per_user, "messages", "user", "Users", "MessagesPerUser")
             self.send_photo(open('MessagesPerUser.png','rb'),t_chat["id"])
