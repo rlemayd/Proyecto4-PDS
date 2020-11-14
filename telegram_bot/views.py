@@ -333,6 +333,18 @@ class TutorialBotView(View):
             self.createPlot(chars_per_user, "characters", "user", "Users", "CharsPerUser")
             self.send_photo(open('CharsPerUser.png','rb'),t_chat["id"])
 
+        elif cmd== "q9":
+            if cmd_time == -1:
+                time_searched = 7
+            else:
+                time_searched = cmd_time
+            words = {}
+            for i in chat["all_words"]:
+                words[i] = chat["all_words"][i]
+            self.createCloudPlot(words)
+            self.send_photo(open('Clouds.png','rb'),t_chat["id"])
+
+
         else:
             msg = "Unknown command"
             self.send_message(msg, t_chat["id"])
