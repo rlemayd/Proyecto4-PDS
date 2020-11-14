@@ -199,7 +199,7 @@ class TutorialBotView(View):
                 for q in range(time_searched):
                     searched_date = str(date.date.today()-date.timedelta(days=q))
                     if searched_date in chat["group_members"][i]:
-                        if i in user_q2:
+                        if i in user_q3:
                             user_q3[i] += chat["group_members"][i][searched_date]["n_characters"]
                         else:
                             user_q3[i] = chat["group_members"][i][searched_date]["n_characters"]
