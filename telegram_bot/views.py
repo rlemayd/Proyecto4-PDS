@@ -120,7 +120,7 @@ class TutorialBotView(View):
                             "n_characters": len(text)
                         }
                     chat["group_members"][str(t_message["from"]["id"])][str(dateObtained)] = user_stats
-                    chat["group_members"][str(t_message["from"]["id"])].update("last_talked": str(dateObtained))
+                    chat["group_members"][str(t_message["from"]["id"])].update({"last_talked": str(dateObtained)})
                     telegram_bot_collection.save(chat)
 
                         
@@ -130,7 +130,7 @@ class TutorialBotView(View):
                             "n_characters": chat["group_members"][str(t_message["from"]["id"])][str(dateObtained)]["n_characters"] + len(text)
                         }
                     chat["group_members"][str(t_message["from"]["id"])][str(dateObtained)].update(user_stats)
-                    chat["group_members"][str(t_message["from"]["id"])].update("last_talked": str(dateObtained))
+                    chat["group_members"][str(t_message["from"]["id"])].update({"last_talked": str(dateObtained)})
                     telegram_bot_collection.save(chat)
             if str(dateObtained) not in chat["words"]:
                 chat["words"][str(dateObtained)] = 1
