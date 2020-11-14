@@ -291,5 +291,5 @@ class TutorialBotView(View):
             f"{TELEGRAM_URL}{TUTORIAL_BOT_TOKEN}/getChatMember", data=data
         )
         response = response.json()
-        user = response["result"]["user"]["first_name"] + response["result"]["user"]["last_name"]
+        user = response["result"]["user"]["first_name"] + " " + response["result"]["user"]["last_name"]
         return user
