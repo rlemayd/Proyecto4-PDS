@@ -160,7 +160,6 @@ class TutorialBotView(View):
             telegram_bot_collection.save(chat)
 
         elif cmd == "q2":
-            most_messages = -1
             user_q2 = {}
             if cmd_time == -1:
                 time_searched = 7
@@ -181,13 +180,13 @@ class TutorialBotView(View):
                     listOfKeys.append(key)
             if len(listOfKeys)==1:
                 x = self.get_user(t_chat["id"], listOfKeys[0])
-                msg = f"The user with most messages is {x} with {most_messages}"
+                msg = f"The user with most messages is {x} with {itemMaxValue}"
                 self.send_message(msg, t_chat["id"])
             else:
                 x = ""
                 for i in listOfKeys:
                     x += self.get_user(t_chat["id"], i) + ", "
-                msg = f"The users with most messages are {x} with {most_messages}"
+                msg = f"The users with most messages are {x} with {itemMaxValue}"
                 self.send_message(msg, t_chat["id"])
 
         elif cmd == "q3":
