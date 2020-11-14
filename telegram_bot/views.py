@@ -176,13 +176,13 @@ class TutorialBotView(View):
                         elif chat["group_members"][i][searched_date]["n_messages"] == most_messages:
                             user_q2.append(i)
             if len(user_q2)==1:
-                self.get_user(t_chat["id"], user_q2[0])
-                msg = f"The user with most messages is with {most_messages}"
+                x = self.get_user(t_chat["id"], user_q2[0])
+                msg = f"The user with most messages is {x} with {most_messages}"
                 self.send_message(msg, t_chat["id"])
             else:
                 x = ""
-                #for i in user_q2:
-                #    x += self.get_user(t_chat["id"], i) + ", "
+                for i in user_q2:
+                    x += self.get_user(t_chat["id"], i) + ", "
                 msg = f"The users with most messages are {x} with {most_messages}"
                 self.send_message(msg, t_chat["id"])
 
@@ -290,6 +290,6 @@ class TutorialBotView(View):
         response = requests.get(
             f"{TELEGRAM_URL}{TUTORIAL_BOT_TOKEN}/getChatMember", data=data
         )
-        print(response.json())
-        #user = response["result"]["user"]["first_name"] + response["result"]["user"]["last_name"]
-        #return user
+        response = response.json()
+        user = response["result"]["user"]["first_name"] + response["result"]["user"]["last_name"]
+        return user
