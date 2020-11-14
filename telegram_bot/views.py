@@ -278,7 +278,7 @@ class TutorialBotView(View):
                             else:
                                 chars_per_day[t] = chat["group_members"][i][t]["n_characters"]
         
-            self.createPlot(chars_per_day, "chatacters", "day", "Dates", "CharactersPerDay")
+            self.createPlot(chars_per_day, "characters", "day", "Dates", "CharactersPerDay")
             self.send_photo(open('CharactersPerDay.png','rb'),t_chat["id"])
 
         else:
