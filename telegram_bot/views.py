@@ -346,7 +346,20 @@ class TutorialBotView(View):
             self.createCloudPlot(words)
             self.send_photo(open('Clouds.png','rb'),t_chat["id"])
 
-
+        elif cmd == "q10":
+            max_qty = -1
+            message = []
+            for i in chat["messages"]
+                if chat["messages"][i] > max_qty:
+                    max_qty = chat["messages"][i]
+                    message = [i]
+                elif chat["messages"][i] == max_qty:
+                    message.append(i)
+            if len(message) == 1:
+                msg = f"The most popular message is \"{message[0]}\""
+            elif len(message) > 1:
+                msg = f"The most popular messages are \"{" ,".join(message)}\""
+            self.send_message(msg, t_chat["id"])
         else:
             msg = "Unknown command"
             self.send_message(msg, t_chat["id"])
