@@ -59,8 +59,11 @@ class TutorialBotView(View):
             cmd = text.split()
             if len(cmd) == 1:
                 cmd = cmd[0]
-            elif len(cmd) == 2:
+            elif len(cmd) == 2 and cmd[0] != "q11":
                 cmd_time = int(cmd[1])
+                cmd = cmd[0]
+            elif len(cmd) == 2 and cmd[0] == "q11":
+                cmd_time = cmd[1]
                 cmd = cmd[0]
 
         #Normal message
