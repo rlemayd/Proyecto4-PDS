@@ -19,12 +19,11 @@ class TutorialBotView(View):
     def createPlot(self, data, searched, dayOrUser, xlabel, fig):
         dates = list(data.keys())
         msg= list(data.values())
+        plt.clf()
         plt.bar(range(len(data)),msg,tick_label=dates)
         plt.title(f"Number of {searched} per {dayOrUser}")
         plt.xlabel(f"{xlabel}")
         plt.ylabel("Quantity")
-        if os.path.exists(f'{fig}.png'):
-            os.remove(f'{fig}.png')
         plt.savefig(f'{fig}.png')
 
     def createCloudPlot(self, data):
