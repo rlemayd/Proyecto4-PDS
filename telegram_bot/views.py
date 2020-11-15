@@ -352,14 +352,14 @@ class TutorialBotView(View):
             for i in chat["messages"]:
                 if chat["messages"][i] > max_qty:
                     max_qty = chat["messages"][i]
-                    message = [i]
+                    message = ["\"" + i + "\""]
                 elif chat["messages"][i] == max_qty:
-                    message.append(i)
+                    message.append("\""+ i + "\"")
             if len(message) == 1:
-                msg = f"The most popular message is \"{message[0]}\""
+                msg = f"The most popular message is {message[0]} with {max_qty} repetitions"
             elif len(message) > 1:
-                message = " ,".join(message)
-                msg = f"The most popular messages are \"{message}\""
+                message = ", ".join(message)
+                msg = f"The most popular messages are {message} with {max_qty} repetitions"
             self.send_message(msg, t_chat["id"])
         else:
             msg = "Unknown command"
