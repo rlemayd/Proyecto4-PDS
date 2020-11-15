@@ -358,7 +358,8 @@ class TutorialBotView(View):
             if len(message) == 1:
                 msg = f"The most popular message is \"{message[0]}\""
             elif len(message) > 1:
-                msg = f"The most popular messages are \"{" ,".join(message)}\""
+                message = " ,".join(message)
+                msg = f"The most popular messages are \"{message}\""
             self.send_message(msg, t_chat["id"])
         else:
             msg = "Unknown command"
