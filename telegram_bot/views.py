@@ -349,7 +349,7 @@ class TutorialBotView(View):
         elif cmd == "q10":
             max_qty = -1
             message = []
-            for i in chat["messages"]
+            for i in chat["messages"]:
                 if chat["messages"][i] > max_qty:
                     max_qty = chat["messages"][i]
                     message = [i]
