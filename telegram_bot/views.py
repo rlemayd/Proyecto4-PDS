@@ -28,6 +28,7 @@ class TutorialBotView(View):
 
     def createCloudPlot(self, data):
         wc = WordCloud(background_color="white",width=1000,height=1000,relative_scaling=0.5,normalize_plurals=False).generate_from_frequencies(data)
+        plt.clf()
         plt.imshow(wc)
         plt.axis("off")
         plt.tight_layout(pad = 0)
