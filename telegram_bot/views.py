@@ -219,7 +219,7 @@ class TutorialBotView(View):
                             user_q3[i] += chat["group_members"][i][searched_date]["n_characters"]
                         else:
                             user_q3[i] = chat["group_members"][i][searched_date]["n_characters"]
-            if len(user_q2) != 0:
+            if len(user_q3) != 0:
                 itemMaxValue = max(user_q3.items(), key=lambda x: x[1])
                 listOfKeys = list()
                 for key, value in user_q3.items():
