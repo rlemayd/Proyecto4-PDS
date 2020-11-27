@@ -174,12 +174,17 @@ class TutorialBotView(View):
                     else:
                         chat["all_words"][str(dateObtained)][str(i)] = 1
                 telegram_bot_collection.save(chat)
-            if text not in chat["messages"]:
-                chat["messages"][text] = 1
+
+            if str(dateObtained) not in chat["messages"]:
+                chat["messages"][str(dateObtained)] = {text : 1}
                 telegram_bot_collection.save(chat)
             else:
-                chat["messages"].update({text: chat["messages"][text] + 1})
+                if text in chat["messages"][str(dateObtained)]:
+                    chat["messages"][str(dateObtained)].update({text:chat["messages"][str(dateObtained)][i] + 1})
+                else:
+                    chat["messages"][str(dateObtained)][text] = 1
                 telegram_bot_collection.save(chat)
+
             chat.update({"last_message": text})
             telegram_bot_collection.save(chat)
 
