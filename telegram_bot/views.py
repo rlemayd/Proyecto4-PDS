@@ -160,7 +160,7 @@ class TutorialBotView(View):
             if str(dateObtained) not in chat["all_words"]:
                 chat["all_words"] = str(dateObtained)
                 for i in text.split():
-                    print("HOLAAAAAAAAAa", chat["all_words"])
+                    print("HOLAAAAAAAAAa", chat)
                     if i not in chat["all_words"][str(dateObtained)]:
                         chat["all_words"][str(dateObtained)][i] = 1
                     else:
