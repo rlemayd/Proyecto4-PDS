@@ -158,7 +158,7 @@ class TutorialBotView(View):
                 telegram_bot_collection.save(chat)
 
             if str(dateObtained) not in chat["all_words"]:
-                chat["all_words"] = [str(dateObtained)]
+                chat["all_words"] = str(dateObtained)
                 for i in text.split():
                     if i not in chat["all_words"]:
                         chat["all_words"][str(dateObtained)][i] = 1
