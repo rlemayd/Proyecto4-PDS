@@ -170,7 +170,7 @@ class TutorialBotView(View):
             else:
                 for i in text.split():
                     if i in chat["all_words"][str(dateObtained)]:
-                        chat["all_words"][str(dateObtained)].update({i:chat["words"][str(dateObtained)][i] + 1})
+                        chat["all_words"][str(dateObtained)].update({i:chat["all_words"][str(dateObtained)][i] + 1})
                     else:
                         chat["all_words"][str(dateObtained)][str(i)] = 1
                 telegram_bot_collection.save(chat)
