@@ -185,20 +185,24 @@ class TutorialBotView(View):
                             user_q2[i] += chat["group_members"][i][searched_date]["n_messages"]
                         else:
                             user_q2[i] = chat["group_members"][i][searched_date]["n_messages"]
-            itemMaxValue = max(user_q2.items(), key=lambda x: x[1])
-            listOfKeys = list()
-            for key, value in user_q2.items():
-                if value == itemMaxValue[1]:
-                    listOfKeys.append(key)
-            if len(listOfKeys)==1:
-                x = self.get_user(t_chat["id"], listOfKeys[0])
-                msg = f"The user with most messages is {x} with {itemMaxValue[1]}"
-                self.send_message(msg, t_chat["id"])
+            if len(user_q2) != 0:
+                itemMaxValue = max(user_q2.items(), key=lambda x: x[1])
+                listOfKeys = list()
+                for key, value in user_q2.items():
+                    if value == itemMaxValue[1]:
+                        listOfKeys.append(key)
+                if len(listOfKeys)==1:
+                    x = self.get_user(t_chat["id"], listOfKeys[0])
+                    msg = f"The user with most messages is {x} with {itemMaxValue[1]}"
+                    self.send_message(msg, t_chat["id"])
+                else:
+                    x = ""
+                    for i in listOfKeys:
+                        x += self.get_user(t_chat["id"], i) + ", "
+                    msg = f"The users with most messages are {x} with {itemMaxValue[1]}"
+                    self.send_message(msg, t_chat["id"])
             else:
-                x = ""
-                for i in listOfKeys:
-                    x += self.get_user(t_chat["id"], i) + ", "
-                msg = f"The users with most messages are {x} with {itemMaxValue[1]}"
+                msg = f"No user has talked since {time_searched} days ago"
                 self.send_message(msg, t_chat["id"])
 
         elif cmd == "q3":
@@ -366,6 +370,7 @@ class TutorialBotView(View):
             self.send_message(msg, t_chat["id"])
         
         elif cmd == "q11":
+            print("Aca deberiamos mandar mail")
             #https://blog.mailtrap.io/sending-emails-in-python-tutorial-with-code-examples/
             #https://blog.mailtrap.io/django-send-email/
 
