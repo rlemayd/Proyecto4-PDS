@@ -202,7 +202,7 @@ class TutorialBotView(View):
                     msg = f"The users with most messages are {x} with {itemMaxValue[1]}"
                     self.send_message(msg, t_chat["id"])
             else:
-                msg = f"No user has talked since {time_searched} days ago"
+                msg = f"No user has spoken for {time_searched} days"
                 self.send_message(msg, t_chat["id"])
 
         elif cmd == "q3":
@@ -219,20 +219,24 @@ class TutorialBotView(View):
                             user_q3[i] += chat["group_members"][i][searched_date]["n_characters"]
                         else:
                             user_q3[i] = chat["group_members"][i][searched_date]["n_characters"]
-            itemMaxValue = max(user_q3.items(), key=lambda x: x[1])
-            listOfKeys = list()
-            for key, value in user_q3.items():
-                if value == itemMaxValue[1]:
-                    listOfKeys.append(key)
-            if len(listOfKeys)==1:
-                x = self.get_user(t_chat["id"], listOfKeys[0])
-                msg = f"The user with most characters is {x} with {itemMaxValue[1]}"
-                self.send_message(msg, t_chat["id"])
+            if len(user_q2) != 0:
+                itemMaxValue = max(user_q3.items(), key=lambda x: x[1])
+                listOfKeys = list()
+                for key, value in user_q3.items():
+                    if value == itemMaxValue[1]:
+                        listOfKeys.append(key)
+                if len(listOfKeys)==1:
+                    x = self.get_user(t_chat["id"], listOfKeys[0])
+                    msg = f"The user with most characters is {x} with {itemMaxValue[1]}"
+                    self.send_message(msg, t_chat["id"])
+                else:
+                    x = ""
+                    for i in listOfKeys:
+                        x += self.get_user(t_chat["id"], i) + ", "
+                    msg = f"The users with most characters are {x} with {itemMaxValue[1]}"
+                    self.send_message(msg, t_chat["id"])
             else:
-                x = ""
-                for i in listOfKeys:
-                    x += self.get_user(t_chat["id"], i) + ", "
-                msg = f"The users with most characters are {x} with {itemMaxValue[1]}"
+                msg = f"No user has spoken for {time_searched} days"
                 self.send_message(msg, t_chat["id"])
 
         elif cmd == "q4":
@@ -246,7 +250,7 @@ class TutorialBotView(View):
                 searched_date = date.date.today()-date.timedelta(days=time_searched)
                 searched_date = date.datetime.strptime(str(searched_date), '%Y-%m-%d')
                 if last_time_talked <= searched_date:
-                    users_innactive.append(i)
+                    users_innactive.append(self.get_user(t_chat["id"], i))
             if len(users_innactive) > 1:
                 x = ", ".join(users_innactive)
                 msg = f"The users who haven't speaked since {searched_date.date()} are {x}"
