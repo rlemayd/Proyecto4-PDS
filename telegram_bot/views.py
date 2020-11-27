@@ -364,6 +364,11 @@ class TutorialBotView(View):
                 message = ", ".join(message)
                 msg = f"The most popular messages are {message} with {max_qty} repetitions"
             self.send_message(msg, t_chat["id"])
+        
+        elif cmd == "q11":
+            #https://blog.mailtrap.io/sending-emails-in-python-tutorial-with-code-examples/
+            #https://blog.mailtrap.io/django-send-email/
+
         else:
             msg = "Unknown command"
             self.send_message(msg, t_chat["id"])
