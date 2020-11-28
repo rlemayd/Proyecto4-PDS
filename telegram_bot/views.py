@@ -190,7 +190,7 @@ class TutorialBotView(View):
                 telegram_bot_collection.save(chat)
             else:
                 if text in chat["messages"][str(dateObtained)]:
-                    chat["messages"][str(dateObtained)].update({text:chat["messages"][str(dateObtained)][i] + 1})
+                    chat["messages"][str(dateObtained)].update({text:chat["messages"][str(dateObtained)][text] + 1})
                 else:
                     chat["messages"][str(dateObtained)][text] = 1
                 telegram_bot_collection.save(chat)
