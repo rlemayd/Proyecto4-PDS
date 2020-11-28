@@ -421,9 +421,9 @@ class TutorialBotView(View):
             if status == "valid":
                 message = MIMEMultipart()
                 message["From"] = "proyecto.4.richard.katherine@gmail.com"
-                message["To"] = "El úlimo mensaje recibido por el bot fue \"" + cmd_time + "\""
+                message["To"] = cmd_time
                 message["Subject"] = "Último mensaje recibido por bot"
-                body = chat["last_message"]
+                body = "El úlimo mensaje recibido por el bot fue \"" + chat["last_message"] + "\""
                 body = MIMEText(body)
                 message.attach(body)
                 smtp = SMTP("smtp.gmail.com")
