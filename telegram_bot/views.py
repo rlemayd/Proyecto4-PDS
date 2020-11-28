@@ -383,19 +383,32 @@ class TutorialBotView(View):
             self.send_photo(open('Clouds.png','rb'),t_chat["id"])
 
         elif cmd == "q10":
-            max_qty = -1
-            message = []
+            if cmd_time == -1:
+                time_searched = 7
+            else:
+                time_searched = cmd_time
+            message = {}
             for i in chat["messages"]:
-                if chat["messages"][i] > max_qty:
-                    max_qty = chat["messages"][i]
-                    message = ["\"" + i + "\""]
-                elif chat["messages"][i] == max_qty:
-                    message.append("\""+ i + "\"")
-            if len(message) == 1:
-                msg = f"The most popular message is {message[0]} with {max_qty} repetitions"
-            elif len(message) > 1:
-                message = ", ".join(message)
-                msg = f"The most popular messages are {message} with {max_qty} repetitions"
+                date_in_loop = date.datetime.strptime(i, '%Y-%m-%d')
+                searched_date = date.date.today()-date.timedelta(days=time_searched)
+                searched_date = date.datetime.strptime(str(searched_date), '%Y-%m-%d')
+                if date_in_loop >= searched_date:
+                    for t in chat["messages"][i]:
+                        if t in message:
+                            message[t] += chat["messages"][i][t]
+                        else:
+                            message[t] = chat["messages"][i][t]
+
+            mx_tuple = max(message.items(),key = lambda x:x[1]) 
+            max_list =[i[0] for i in message.items() if i[1]==mx_tuple[1]]
+
+            if len(max_list) > 1:
+                x = ", ".join(max_list)
+                msg = f"The most popular messages since {searched_date.date()} are {x}"
+            elif len(max_list) == 1:
+                msg = f"The most popular message since {searched_date.date()} is {max_list[0]}"
+            else:
+                msg = f"There are none most popular messages since {searched_date.date()}"
             self.send_message(msg, t_chat["id"])
         
         elif cmd == "q11":
