@@ -370,7 +370,15 @@ class TutorialBotView(View):
                 time_searched = cmd_time
             words = {}
             for i in chat["all_words"]:
-                words[i] = chat["all_words"][i]
+                date_in_loop = date.datetime.strptime(i, '%Y-%m-%d')
+                searched_date = date.date.today()-date.timedelta(days=time_searched)
+                searched_date = date.datetime.strptime(str(searched_date), '%Y-%m-%d')
+                if date_in_loop >= searched_date:
+                    for t in chat["all_words"][i]:
+                        if t in words:
+                            words[t] += chat["all_words"][i][t]
+                        else:
+                            words[t] = chat["all_words"][i][t]
             self.createCloudPlot(words)
             self.send_photo(open('Clouds.png','rb'),t_chat["id"])
 
