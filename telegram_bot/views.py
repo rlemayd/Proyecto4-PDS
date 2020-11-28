@@ -67,7 +67,7 @@ class TutorialBotView(View):
             elif len(cmd) == 2 and cmd[0] == "add":
                 cmd_time = cmd[1]
                 cmd = cmd[0]
-            elif len(cmd) == 2 and cmd[0] != "last_message":
+            elif len(cmd) == 2 and cmd[0] != "last_message" and cmd[0] != "add":
                 cmd_time = int(cmd[1])
                 cmd = cmd[0]
             elif len(cmd) == 2 and cmd[0] == "last_message":
