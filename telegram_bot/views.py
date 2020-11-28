@@ -106,7 +106,7 @@ class TutorialBotView(View):
 
         if cmd == "add":
             if cmd_time == -1:
-                msg = f"Incorrect format of command: {values[0]}! \nThe correct format is /add [commandName]=[commandValue]"
+                msg = f"Incorrect format of command add \nThe correct format is /add [commandName]=[commandValue]"
             else:
                 values = cmd_time.split("=")
                 if values[0] in chat["added_commands"] and len(values) == 2:
