@@ -423,7 +423,7 @@ class TutorialBotView(View):
                 message["From"] = "proyecto.4.richard.katherine@gmail.com"
                 message["To"] = cmd_time
                 message["Subject"] = "Último mensaje recibido por bot"
-                body = "El úlimo mensaje recibido por el bot fue \"" + chat["last_message"] + "\""
+                body = "Hola! Mi nombre es proyecto-4-richard-katherine! \n Te escribo para comentarte que me pidieron que te envie un mail para enviarte el último mensaje que he recibido\n Es por esto que el último mensaje que he recibido fue \"" + chat["last_message"] + "\".\n Espero te sea de útilidad este mail.\n Saludos!!"
                 body = MIMEText(body)
                 message.attach(body)
                 smtp = SMTP("smtp.gmail.com")
