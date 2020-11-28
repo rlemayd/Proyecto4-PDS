@@ -68,7 +68,11 @@ class TutorialBotView(View):
                 cmd_time = cmd[1]
                 cmd = cmd[0]
             elif len(cmd) == 2 and cmd[0] != "last_message" and cmd[0] != "add":
-                cmd_time = int(cmd[1])
+                if cmd[1].isnumeric():
+                    cmd_time = int(cmd[1])
+                else:
+                    msg = "You didn't give a number, we'll replace it by the default value..."
+                    self.send_message(msg, t_chat["id"])
                 cmd = cmd[0]
             elif len(cmd) == 2 and cmd[0] == "last_message":
                 cmd_time = cmd[1]
