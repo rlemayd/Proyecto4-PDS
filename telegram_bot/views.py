@@ -103,8 +103,7 @@ class TutorialBotView(View):
                     self.send_message(chat["added_commands"][i], t_chat["id"])
 
         if cmd == "add":
-            text = cmd_time.split()
-            values = text[1].split("=")
+            values = cmd_time.split("=")
             if values[0] in chat["added_commands"] and len(values) == 2:
                 new_resp = {values[0]: values[1]}
                 chat["added_commands"].update(new_resp)
