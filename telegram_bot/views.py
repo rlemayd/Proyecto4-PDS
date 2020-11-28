@@ -58,8 +58,8 @@ class TutorialBotView(View):
         # If the message it's a command
         cmd_time = -1
         if text[0] == "/":
-            if "@proyecto_4_rich_kath_bot" in text[0]:
-                text[0].replace("@proyecto_4_rich_kath_bot","")
+            if "@proyecto_4_rich_kath_bot" in text:
+                text.replace("@proyecto_4_rich_kath_bot","")
             text = text.lstrip("/")
             cmd = text.split()
             if len(cmd) == 1:
