@@ -10,7 +10,6 @@ from wordcloud import WordCloud
 from email.mime.multipart import  MIMEMultipart
 from email.mime.text import MIMEText
 from smtplib import SMTP
-from validate_email import validate_email
 
 from .models import telegram_bot_collection
 
@@ -416,8 +415,10 @@ class TutorialBotView(View):
             self.send_message(msg, t_chat["id"])
         
         elif cmd == "q11":
-            is_valid = validate_email(cmd_time, verify=True)
-            if is_valid:
+            response = requests.get("https://isitarealemail.com/api/email/validate",params = {'email': cmd_time})
+            status = response.json()['status']
+
+            if status == "valid":
                 message = MIMEMultipart()
                 message["From"] = "proyecto.4.richard.katherine@gmail.com"
                 message["To"] = "El úlimo mensaje recibido por el bot fue \"" + cmd_time + "\""
@@ -430,10 +431,15 @@ class TutorialBotView(View):
                 smtp.login("proyecto.4.richard.katherine@gmail.com","proyecto4")
                 smtp.sendmail("proyecto.4.richard.katherine@gmail.com", cmd_time, message.as_string())
                 smtp.quit()
-                msg = "Mail Enviado con éxito"
+                msg = "Mail successfully sent"
                 self.send_message(msg, t_chat["id"])
+
+            elif status == "invalid":
+                msg = "Email is invalid"
+                self.send_message(msg, t_chat["id"])
+
             else:
-                msg = "Mail recibido no existe"
+                msg = "Email was unknown"
                 self.send_message(msg, t_chat["id"])
 
         else:
