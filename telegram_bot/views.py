@@ -58,6 +58,8 @@ class TutorialBotView(View):
         # If the message it's a command
         cmd_time = -1
         if text[0] == "/":
+            if "@proyecto_4_rich_kath_bot" in text[0]:
+                text[0].replace("@proyecto_4_rich_kath_bot","")
             text = text.lstrip("/")
             cmd = text.split()
             if len(cmd) == 1:
@@ -444,21 +446,21 @@ class TutorialBotView(View):
                 msg = "Email was unknown"
                 self.send_message(msg, t_chat["id"])
 
-        #elif cmd == "help":
-         #   msg = """I can help you analyze and get statistics of your groups!.\n<days> is an optional param, if it's not given it's replaced by 7 days.\nYou can control me by sending these commands:\n
-#/add \[commandName]=\[commandValue] - To answer a specific word when i receive a certain word.\n
-#/most\_messages <days> - Obtain the user with most messages from a specific date.\n
-#/most\_characters <days> - Obtain the user with most characters sent from a specific date.\n
-#absent\_user <days> - Obtain the user who have not written messages in a period from a specific date.\n
-#/messages\_per\_day <days> - Obtain a graph with the number of messages per day from a specific date.\n
-#/characters\_per\_day <days> - Obtain a graph with the number of characters per day from a specific date.\n
-#/messages\_per\_user <days> - Obtain a graph with the number of messages per user from a specific date.\n
-#/characters\_per\_user <days> - Obtain a graph with the number of characters per user from a specific date.\n
-#/word\_cloud <days> - Obtain a word cloud with all messages from a specific date.\n
-#/popular\_message <days> - Obtain the most popular message from a specific date.\n
-#/last\_message \[Email] - Email the last message received."""
+        elif cmd == "help":
+            msg = """I can help you analyze and get statistics of your groups!.\n<days> is an optional param, if it's not given it's replaced by 7 days.\nYou can control me by sending these commands:\n
+/add \[commandName]=\[commandValue] - To answer a specific word when i receive a certain word.\n
+/most\_messages <days> - Obtain the user with most messages from a specific date.\n
+/most\_characters <days> - Obtain the user with most characters sent from a specific date.\n
+/absent\_user <days> - Obtain the user who have not written messages in a period from a specific date.\n
+/messages\_per\_day <days> - Obtain a graph with the number of messages per day from a specific date.\n
+/characters\_per\_day <days> - Obtain a graph with the number of characters per day from a specific date.\n
+/messages\_per\_user <days> - Obtain a graph with the number of messages per user from a specific date.\n
+/characters\_per\_user <days> - Obtain a graph with the number of characters per user from a specific date.\n
+/word\_cloud <days> - Obtain a word cloud with all messages from a specific date.\n
+/popular\_message <days> - Obtain the most popular message from a specific date.\n
+/last\_message \[Email] - Email the last message received."""
             
-           # self.send_message(msg, t_chat["id"])
+            self.send_message(msg, t_chat["id"])
 
         else:
             msg = "Unknown command"
