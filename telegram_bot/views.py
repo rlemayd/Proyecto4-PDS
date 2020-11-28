@@ -106,7 +106,7 @@ class TutorialBotView(View):
 
         if cmd == "add":
             if cmd_time == -1:
-                msg = f"Incorrect format of command add \nThe correct format is /add [commandName]=[commandValue]"
+                msg = f"Incorrect format of command add \nThe correct format is /add \[commandName]=\[commandValue]"
             else:
                 values = cmd_time.split("=")
                 if values[0] in chat["added_commands"] and len(values) == 2:
@@ -119,7 +119,7 @@ class TutorialBotView(View):
                     msg = f"Command: {values[0]} added to bot!"
                     telegram_bot_collection.save(chat)
                 else:  
-                    msg = f"Incorrect format of command: {values[0]}! \nThe correct format is /add [commandName]=[commandValue]"
+                    msg = f"Incorrect format of command: {values[0]}! \nThe correct format is /add \[commandName]=\[commandValue]"
             self.send_message(msg, t_chat["id"])
 
         elif cmd == "":
