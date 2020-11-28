@@ -431,11 +431,11 @@ class TutorialBotView(View):
                 smtp.login("proyecto.4.richard.katherine@gmail.com","proyecto4")
                 smtp.sendmail("proyecto.4.richard.katherine@gmail.com", cmd_time, message.as_string())
                 smtp.quit()
-                msg = "Mail successfully sent"
+                msg = "Mail was successfully sent"
                 self.send_message(msg, t_chat["id"])
 
             elif status == "invalid":
-                msg = "Email is invalid"
+                msg = "Email format is invalid"
                 self.send_message(msg, t_chat["id"])
 
             else:
