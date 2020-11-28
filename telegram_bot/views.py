@@ -105,18 +105,21 @@ class TutorialBotView(View):
                     self.send_message(chat["added_commands"][i], t_chat["id"])
 
         if cmd == "add":
-            values = cmd_time.split("=")
-            if values[0] in chat["added_commands"] and len(values) == 2:
-                new_resp = {values[0]: values[1]}
-                chat["added_commands"].update(new_resp)
-                msg = f"The function {values[0]} was changed to {values[1]}"
-                telegram_bot_collection.save(chat)
-            elif values[0] not in chat["added_commands"] and len(values) == 2:
-                chat["added_commands"][values[0]] = values[1]
-                msg = f"Command: {values[0]} added to bot!"
-                telegram_bot_collection.save(chat)
-            else:  
+            if cmd_time == -1:
                 msg = f"Incorrect format of command: {values[0]}! \nThe correct format is /add [commandName]=[commandValue]"
+            else:
+                values = cmd_time.split("=")
+                if values[0] in chat["added_commands"] and len(values) == 2:
+                    new_resp = {values[0]: values[1]}
+                    chat["added_commands"].update(new_resp)
+                    msg = f"The function {values[0]} was changed to {values[1]}"
+                    telegram_bot_collection.save(chat)
+                elif values[0] not in chat["added_commands"] and len(values) == 2:
+                    chat["added_commands"][values[0]] = values[1]
+                    msg = f"Command: {values[0]} added to bot!"
+                    telegram_bot_collection.save(chat)
+                else:  
+                    msg = f"Incorrect format of command: {values[0]}! \nThe correct format is /add [commandName]=[commandValue]"
             self.send_message(msg, t_chat["id"])
 
         elif cmd == "":
