@@ -422,32 +422,33 @@ class TutorialBotView(View):
             self.send_message(msg, t_chat["id"])
         
         elif cmd == "last_message":
-            response = requests.get("https://isitarealemail.com/api/email/validate",params = {'email': cmd_time})
-            status = response.json()['status']
-
-            if status == "valid":
-                message = MIMEMultipart()
-                message["From"] = "proyecto.4.richard.katherine@gmail.com"
-                message["To"] = cmd_time
-                message["Subject"] = "Último mensaje recibido por bot"
-                body = "Hola! Mi nombre es proyecto-4-richard-katherine! \n\nTe escribo para comentarte que me pidieron que te envie un mail para enviarte el último mensaje que he recibido\nEs por esto que el último mensaje que he recibido fue \"" + chat["last_message"] + "\".\n\n\nEspero te sea de útilidad este mail.\n\nSaludos!!"
-                body = MIMEText(body)
-                message.attach(body)
-                smtp = SMTP("smtp.gmail.com")
-                smtp.starttls()
-                smtp.login("proyecto.4.richard.katherine@gmail.com","proyecto4")
-                smtp.sendmail("proyecto.4.richard.katherine@gmail.com", cmd_time, message.as_string())
-                smtp.quit()
-                msg = "Mail was successfully sent"
-                self.send_message(msg, t_chat["id"])
-
-            elif status == "invalid":
-                msg = "Email format is invalid"
-                self.send_message(msg, t_chat["id"])
-
+            if cmd_time == -1:
+                msg = "Email not given"
             else:
-                msg = "Email was unknown"
-                self.send_message(msg, t_chat["id"])
+                response = requests.get("https://isitarealemail.com/api/email/validate",params = {'email': cmd_time})
+                status = response.json()['status']
+
+                if status == "valid":
+                    message = MIMEMultipart()
+                    message["From"] = "proyecto.4.richard.katherine@gmail.com"
+                    message["To"] = cmd_time
+                    message["Subject"] = "Último mensaje recibido por bot"
+                    body = "Hola! Mi nombre es proyecto-4-richard-katherine! \n\nTe escribo para comentarte que me pidieron que te envie un mail para enviarte el último mensaje que he recibido\nEs por esto que el último mensaje que he recibido fue \"" + chat["last_message"] + "\".\n\n\nEspero te sea de útilidad este mail.\n\nSaludos!!"
+                    body = MIMEText(body)
+                    message.attach(body)
+                    smtp = SMTP("smtp.gmail.com")
+                    smtp.starttls()
+                    smtp.login("proyecto.4.richard.katherine@gmail.com","proyecto4")
+                    smtp.sendmail("proyecto.4.richard.katherine@gmail.com", cmd_time, message.as_string())
+                    smtp.quit()
+                    msg = "Mail was successfully sent"
+
+                elif status == "invalid":
+                    msg = "Email format is invalid"
+
+                else:
+                    msg = "Email was unknown"
+            self.send_message(msg, t_chat["id"])
 
         elif cmd == "help":
             msg = """I can help you analyze and get statistics of your groups!.\n<days> is an optional param, if it's not given it's replaced by 7 days.\nYou can control me by sending these commands:\n
