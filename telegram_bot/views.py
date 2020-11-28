@@ -7,6 +7,9 @@ from django.views import View
 import datetime as date
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
+from email.mime.multipart import  MIMEMultipart
+from email.mime.text import MIMEText
+from smtplib import SMTP
 
 from .models import telegram_bot_collection
 
@@ -412,9 +415,18 @@ class TutorialBotView(View):
             self.send_message(msg, t_chat["id"])
         
         elif cmd == "q11":
-            print("Aca deberiamos mandar mail")
-            #https://blog.mailtrap.io/sending-emails-in-python-tutorial-with-code-examples/
-            #https://blog.mailtrap.io/django-send-email/
+            message = MIMEMultipart()
+            message["From"] = "proyecto.4.richard.katherine@gmail.com"
+            message["To"] = "katty.jjc@gmail.com"
+            message["Subject"] = "Correo de prueba desde Python!!"
+            body = 'This is the body of the email.'
+            body = MIMEText(body)
+            message.attach(body)
+            smtp = SMTP("smtp.gmail.com")
+            smtp.starttls()
+            smtp.login("proyecto.4.richard.katherine@gmail.com","proyecto4")
+            smtp.sendmail("proyecto.4.richard.katherine@gmail.com", "katty.jjc@gmail.com", message.as_string())
+            smtp.quit()
 
         else:
             msg = "Unknown command"
