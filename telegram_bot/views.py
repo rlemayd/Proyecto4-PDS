@@ -10,6 +10,7 @@ from wordcloud import WordCloud
 from email.mime.multipart import  MIMEMultipart
 from email.mime.text import MIMEText
 from smtplib import SMTP
+from validate_email import validate_email
 
 from .models import telegram_bot_collection
 
@@ -415,18 +416,25 @@ class TutorialBotView(View):
             self.send_message(msg, t_chat["id"])
         
         elif cmd == "q11":
-            message = MIMEMultipart()
-            message["From"] = "proyecto.4.richard.katherine@gmail.com"
-            message["To"] = cmd_time
-            message["Subject"] = "Último mensaje recibido por bot"
-            body = chat["last_message"]
-            body = MIMEText(body)
-            message.attach(body)
-            smtp = SMTP("smtp.gmail.com")
-            smtp.starttls()
-            smtp.login("proyecto.4.richard.katherine@gmail.com","proyecto4")
-            smtp.sendmail("proyecto.4.richard.katherine@gmail.com", cmd_time, message.as_string())
-            smtp.quit()
+            is_valid = validate_email('example@example.com', verify=True)
+            if is_valid:
+                message = MIMEMultipart()
+                message["From"] = "proyecto.4.richard.katherine@gmail.com"
+                message["To"] = "El úlimo mensaje recibido por el bot fue \"" + cmd_time + "\""
+                message["Subject"] = "Último mensaje recibido por bot"
+                body = chat["last_message"]
+                body = MIMEText(body)
+                message.attach(body)
+                smtp = SMTP("smtp.gmail.com")
+                smtp.starttls()
+                smtp.login("proyecto.4.richard.katherine@gmail.com","proyecto4")
+                smtp.sendmail("proyecto.4.richard.katherine@gmail.com", cmd_time, message.as_string())
+                smtp.quit()
+                msg = "Mail Enviado con éxito"
+                self.send_message(msg, t_chat["id"])
+            else:
+                msg = "Mail recibido no existe"
+                self.send_message(msg, t_chat["id"])
 
         else:
             msg = "Unknown command"
