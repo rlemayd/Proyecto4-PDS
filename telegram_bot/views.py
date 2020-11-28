@@ -62,6 +62,9 @@ class TutorialBotView(View):
             cmd = text.split()
             if len(cmd) == 1:
                 cmd = cmd[0]
+            elif len(cmd) == 2 and cmd[0] == "add":
+                cmd_time = cmd[1]
+                cmd = cmd[0]
             elif len(cmd) == 2 and cmd[0] != "last_message":
                 cmd_time = int(cmd[1])
                 cmd = cmd[0]
@@ -100,7 +103,7 @@ class TutorialBotView(View):
                     self.send_message(chat["added_commands"][i], t_chat["id"])
 
         if cmd == "add":
-            text = text.split()
+            text = cmd_time.split()
             values = text[1].split("=")
             if values[0] in chat["added_commands"] and len(values) == 2:
                 new_resp = {values[0]: values[1]}
