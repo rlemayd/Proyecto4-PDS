@@ -416,7 +416,7 @@ class TutorialBotView(View):
             self.send_message(msg, t_chat["id"])
         
         elif cmd == "q11":
-            is_valid = validate_email('example@example.com', verify=True)
+            is_valid = validate_email(cmd_time, verify=True)
             if is_valid:
                 message = MIMEMultipart()
                 message["From"] = "proyecto.4.richard.katherine@gmail.com"
