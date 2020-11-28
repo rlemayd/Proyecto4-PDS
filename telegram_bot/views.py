@@ -62,10 +62,10 @@ class TutorialBotView(View):
             cmd = text.split()
             if len(cmd) == 1:
                 cmd = cmd[0]
-            elif len(cmd) == 2 and cmd[0] != "q11":
+            elif len(cmd) == 2 and cmd[0] != "last_message":
                 cmd_time = int(cmd[1])
                 cmd = cmd[0]
-            elif len(cmd) == 2 and cmd[0] == "q11":
+            elif len(cmd) == 2 and cmd[0] == "last_message":
                 cmd_time = cmd[1]
                 cmd = cmd[0]
 
@@ -112,7 +112,7 @@ class TutorialBotView(View):
                 msg = f"Command: {values[0]} added to bot!"
                 telegram_bot_collection.save(chat)
             else:  
-                msg = f"Incorrect format of command: {values[0]}! \nThe correct format is /add commandName=commandValue"
+                msg = f"Incorrect format of command: {values[0]}! \nThe correct format is /add [commandName]=[commandValue]"
             self.send_message(msg, t_chat["id"])
 
         elif cmd == "":
@@ -191,7 +191,7 @@ class TutorialBotView(View):
             chat.update({"last_message": text})
             telegram_bot_collection.save(chat)
 
-        elif cmd == "q2":
+        elif cmd == "most_messages":
             user_q2 = {}
             if cmd_time == -1:
                 time_searched = 7
@@ -225,7 +225,7 @@ class TutorialBotView(View):
                 msg = f"No user has spoken for {time_searched} days"
                 self.send_message(msg, t_chat["id"])
 
-        elif cmd == "q3":
+        elif cmd == "most_characters":
             user_q3 = {}
             if cmd_time == -1:
                 time_searched = 7
@@ -259,7 +259,7 @@ class TutorialBotView(View):
                 msg = f"No user has spoken for {time_searched} days"
                 self.send_message(msg, t_chat["id"])
 
-        elif cmd == "q4":
+        elif cmd == "absent_user":
             if cmd_time == -1:
                 time_searched = 7
             else:
@@ -280,7 +280,7 @@ class TutorialBotView(View):
                 msg = f"There are none users who haven't speaked since {searched_date.date()}"
             self.send_message(msg, t_chat["id"])
 
-        elif cmd== "q5":
+        elif cmd== "messages_per_day":
             if cmd_time == -1:
                 time_searched = 7
             else:
@@ -301,7 +301,7 @@ class TutorialBotView(View):
             self.createPlot(messages_per_day, "messages", "day", "Dates", "MessagesPerDay")
             self.send_photo(open('MessagesPerDay.png','rb'),t_chat["id"])
 
-        elif cmd== "q6":
+        elif cmd== "characters_per_day":
             if cmd_time == -1:
                 time_searched = 7
             else:
@@ -322,7 +322,7 @@ class TutorialBotView(View):
             self.createPlot(chars_per_day, "characters", "day", "Dates", "CharactersPerDay")
             self.send_photo(open('CharactersPerDay.png','rb'),t_chat["id"])
 
-        elif cmd== "q7":
+        elif cmd== "messages_per_user":
             if cmd_time == -1:
                 time_searched = 7
             else:
@@ -344,7 +344,7 @@ class TutorialBotView(View):
             self.createPlot(messages_per_user, "messages", "user", "Users", "MessagesPerUser")
             self.send_photo(open('MessagesPerUser.png','rb'),t_chat["id"])
 
-        elif cmd== "q8":
+        elif cmd== "characters_per_user":
             if cmd_time == -1:
                 time_searched = 7
             else:
@@ -366,7 +366,7 @@ class TutorialBotView(View):
             self.createPlot(chars_per_user, "characters", "user", "Users", "CharsPerUser")
             self.send_photo(open('CharsPerUser.png','rb'),t_chat["id"])
 
-        elif cmd== "q9":
+        elif cmd== "word_cloud":
             if cmd_time == -1:
                 time_searched = 7
             else:
@@ -385,7 +385,7 @@ class TutorialBotView(View):
             self.createCloudPlot(words)
             self.send_photo(open('Clouds.png','rb'),t_chat["id"])
 
-        elif cmd == "q10":
+        elif cmd == "popular_message":
             if cmd_time == -1:
                 time_searched = 7
             else:
@@ -414,7 +414,7 @@ class TutorialBotView(View):
                 msg = f"There are none most popular messages since {searched_date.date()}"
             self.send_message(msg, t_chat["id"])
         
-        elif cmd == "q11":
+        elif cmd == "last_message":
             response = requests.get("https://isitarealemail.com/api/email/validate",params = {'email': cmd_time})
             status = response.json()['status']
 
@@ -423,7 +423,7 @@ class TutorialBotView(View):
                 message["From"] = "proyecto.4.richard.katherine@gmail.com"
                 message["To"] = cmd_time
                 message["Subject"] = "Último mensaje recibido por bot"
-                body = "Hola! Mi nombre es proyecto-4-richard-katherine! \n Te escribo para comentarte que me pidieron que te envie un mail para enviarte el último mensaje que he recibido\n Es por esto que el último mensaje que he recibido fue \"" + chat["last_message"] + "\".\n Espero te sea de útilidad este mail.\n Saludos!!"
+                body = "Hola! Mi nombre es proyecto-4-richard-katherine! \n\nTe escribo para comentarte que me pidieron que te envie un mail para enviarte el último mensaje que he recibido\nEs por esto que el último mensaje que he recibido fue \"" + chat["last_message"] + "\".\n\n\nEspero te sea de útilidad este mail.\n\nSaludos!!"
                 body = MIMEText(body)
                 message.attach(body)
                 smtp = SMTP("smtp.gmail.com")
@@ -441,6 +441,25 @@ class TutorialBotView(View):
             else:
                 msg = "Email was unknown"
                 self.send_message(msg, t_chat["id"])
+
+        elif cmd == "help":
+            msg = """
+                    I can help you analyze and get statistics of your groups!.\n
+                    <days> is an optional param, if it's not given it's replaced by 7 days.\n
+                    You can control me by sending these commands:\n
+                    \t* /add [commandName]=[commandValue] - To answer a specific word when i receive a certain word.\n
+                    \t* /most_messages <days> - Obtain the user with most messages from a specific date.\n
+                    \t* /most_characters <days> - Obtain the user with most characters sent from a specific date.\n
+                    \t* /absent_user <days> - Obtain the user who have not written messages in a period from a specific date.\n
+                    \t* /messages_per_day <days> - Obtain a graph with the number of messages per day from a specific date.\n
+                    \t* /characters_per_day <days> - Obtain a graph with the number of characters per day from a specific date.\n
+                    \t* /messages_per_user <days> - Obtain a graph with the number of messages per user from a specific date.\n
+                    \t* /characters_per_user <days> - Obtain a graph with the number of characters per user from a specific date.\n
+                    \t* /word_cloud <days> - Obtain a word cloud with all messages from a specific date.\n
+                    \t* /popular_message <days> - Obtain the most popular message from a specific date.\n
+                    \t* /last_message [Email] - Email the last message received.
+                """
+            self.send_message(msg, t_chat["id"])
 
         else:
             msg = "Unknown command"
