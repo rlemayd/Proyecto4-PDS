@@ -417,15 +417,15 @@ class TutorialBotView(View):
         elif cmd == "q11":
             message = MIMEMultipart()
             message["From"] = "proyecto.4.richard.katherine@gmail.com"
-            message["To"] = "katty.jjc@gmail.com"
-            message["Subject"] = "Correo de prueba desde Python!!"
-            body = 'This is the body of the email.'
+            message["To"] = cmd_time
+            message["Subject"] = "Último mensaje recibido por bot"
+            body = chat["last_message"]
             body = MIMEText(body)
             message.attach(body)
             smtp = SMTP("smtp.gmail.com")
             smtp.starttls()
             smtp.login("proyecto.4.richard.katherine@gmail.com","proyecto4")
-            smtp.sendmail("proyecto.4.richard.katherine@gmail.com", "katty.jjc@gmail.com", message.as_string())
+            smtp.sendmail("proyecto.4.richard.katherine@gmail.com", cmd_time, message.as_string())
             smtp.quit()
 
         else:
