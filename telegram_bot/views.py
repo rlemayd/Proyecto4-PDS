@@ -443,21 +443,20 @@ class TutorialBotView(View):
                 self.send_message(msg, t_chat["id"])
 
         elif cmd == "help":
-            print("ESTAMOOOOOOOOOOS EN HELPPPPPP")
-            msg = """I can help you analyze and get statistics of your groups!.\n
-            <days> is an optional param, if it's not given it's replaced by 7 days.\n
+            msg = """I can help you analyze and get statistics of your groups!.
+            <days> is an optional param, if it's not given it's replaced by 7 days.
             You can control me by sending these commands:\n
-            \t\* /add \[commandName]=\[commandValue] - To answer a specific word when i receive a certain word.\n
-            \t\* /most\_messages <days> - Obtain the user with most messages from a specific date.\n
-            \t\* /most\_characters <days> - Obtain the user with most characters sent from a specific date.\n
-            \t\* /absent\_user <days> - Obtain the user who have not written messages in a period from a specific date.\n
-            \t\* /messages\_per_day <days> - Obtain a graph with the number of messages per day from a specific date.\n
-            \t\* /characters\_per_day <days> - Obtain a graph with the number of characters per day from a specific date.\n
-            \t\* /messages\_per_user <days> - Obtain a graph with the number of messages per user from a specific date.\n
-            \t\* /characters\_per_user <days> - Obtain a graph with the number of characters per user from a specific date.\n
-            \t\* /word_cloud <days> - Obtain a word cloud with all messages from a specific date.\n
-            \t\* /popular\_message <days> - Obtain the most popular message from a specific date.\n
-            \t\* /last\_message \[Email] - Email the last message received."""
+            \t/add \[commandName]=\[commandValue] - To answer a specific word when i receive a certain word.\n
+            \t/most\_messages <days> - Obtain the user with most messages from a specific date.\n
+            \t/most\_characters <days> - Obtain the user with most characters sent from a specific date.\n
+            \t/absent\_user <days> - Obtain the user who have not written messages in a period from a specific date.\n
+            \t/messages\_per\_day <days> - Obtain a graph with the number of messages per day from a specific date.\n
+            \t/characters\_per\_day <days> - Obtain a graph with the number of characters per day from a specific date.\n
+            \t/messages\_per\_user <days> - Obtain a graph with the number of messages per user from a specific date.\n
+            \t/characters\_per\_user <days> - Obtain a graph with the number of characters per user from a specific date.\n
+            \t/word\_cloud <days> - Obtain a word cloud with all messages from a specific date.\n
+            \t/popular\_message <days> - Obtain the most popular message from a specific date.\n
+            \t/last\_message \[Email] - Email the last message received."""
             
             self.send_message(msg, t_chat["id"])
 
