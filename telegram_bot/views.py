@@ -211,21 +211,14 @@ class TutorialBotView(View):
             else:
                 time_searched = cmd_time
             for i in chat["group_members"]:
-                if time_searched != 0:
-                    for q in range(time_searched):
-                        searched_date = str(date.date.today()-date.timedelta(days=q))
-                        if searched_date in chat["group_members"][i]:
-                            if i in user_q2:
-                                user_q2[i] += chat["group_members"][i][searched_date]["n_messages"]
-                            else:
-                                user_q2[i] = chat["group_members"][i][searched_date]["n_messages"]
-                else:
-                    searched_date = str(date.date.today())
+                for q in range(time_searched + 1):
+                    searched_date = str(date.date.today()-date.timedelta(days=q))
                     if searched_date in chat["group_members"][i]:
                         if i in user_q2:
                             user_q2[i] += chat["group_members"][i][searched_date]["n_messages"]
                         else:
                             user_q2[i] = chat["group_members"][i][searched_date]["n_messages"]
+                
             if len(user_q2) != 0:
                 itemMaxValue = max(user_q2.items(), key=lambda x: x[1])
                 listOfKeys = list()
@@ -253,21 +246,14 @@ class TutorialBotView(View):
             else:
                 time_searched = cmd_time
             for i in chat["group_members"]:
-                if time_searched != 0:
-                    for q in range(time_searched):
-                        searched_date = str(date.date.today()-date.timedelta(days=q))
-                        if searched_date in chat["group_members"][i]:
-                            if i in user_q3:
-                                user_q3[i] += chat["group_members"][i][searched_date]["n_characters"]
-                            else:
-                                user_q3[i] = chat["group_members"][i][searched_date]["n_characters"]
-                else:
-                    searched_date = str(date.date.today())
+                for q in range(time_searched + 1):
+                    searched_date = str(date.date.today()-date.timedelta(days=q))
                     if searched_date in chat["group_members"][i]:
                         if i in user_q3:
                             user_q3[i] += chat["group_members"][i][searched_date]["n_characters"]
                         else:
                             user_q3[i] = chat["group_members"][i][searched_date]["n_characters"]
+                
             if len(user_q3) != 0:
                 itemMaxValue = max(user_q3.items(), key=lambda x: x[1])
                 listOfKeys = list()
@@ -296,10 +282,7 @@ class TutorialBotView(View):
             users_innactive = []
             for i in chat["group_members"]:
                 last_time_talked = date.datetime.strptime(chat["group_members"][i]["last_talked"], '%Y-%m-%d')
-                if time_searched != 0:
-                    searched_date = date.date.today()-date.timedelta(days=time_searched)
-                else:
-                    searched_date = date.date.today()
+                searched_date = date.date.today()-date.timedelta(days=time_searched)
                 searched_date = date.datetime.strptime(str(searched_date), '%Y-%m-%d')
                 if last_time_talked <= searched_date:
                     users_innactive.append(self.get_user(t_chat["id"], i))
