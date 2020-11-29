@@ -21,7 +21,7 @@ TUTORIAL_BOT_TOKEN = "1233503709:AAE4fJsZTy2_AVtXOlOywOX_M18HbIonoEQ"
 class TutorialBotView(View):
     def createPlot(self, data, searched, dayOrUser, xlabel, fig):
         dates = list(data.keys())
-        msg= list(data.values())
+        msg = list(data.values())
         plt.clf()
         plt.figure()
         plt.bar(range(len(data)),msg,tick_label=dates)
