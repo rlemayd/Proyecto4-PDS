@@ -211,8 +211,16 @@ class TutorialBotView(View):
             else:
                 time_searched = cmd_time
             for i in chat["group_members"]:
-                for q in range(time_searched):
-                    searched_date = str(date.date.today()-date.timedelta(days=q))
+                if time_searched != 0:
+                    for q in range(time_searched):
+                        searched_date = str(date.date.today()-date.timedelta(days=q))
+                        if searched_date in chat["group_members"][i]:
+                            if i in user_q2:
+                                user_q2[i] += chat["group_members"][i][searched_date]["n_messages"]
+                            else:
+                                user_q2[i] = chat["group_members"][i][searched_date]["n_messages"]
+                else:
+                    searched_date = str(date.date.today())
                     if searched_date in chat["group_members"][i]:
                         if i in user_q2:
                             user_q2[i] += chat["group_members"][i][searched_date]["n_messages"]
