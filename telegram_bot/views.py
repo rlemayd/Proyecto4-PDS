@@ -23,6 +23,7 @@ class TutorialBotView(View):
         dates = list(data.keys())
         msg= list(data.values())
         plt.clf()
+        plt.figure()
         plt.bar(range(len(data)),msg,tick_label=dates)
         plt.title(f"Number of {searched} per {dayOrUser}")
         plt.xlabel(f"{xlabel}")
@@ -32,6 +33,7 @@ class TutorialBotView(View):
     def createCloudPlot(self, data):
         wc = WordCloud(background_color="white",width=1000,height=1000,relative_scaling=0.5,normalize_plurals=False).generate_from_frequencies(data)
         plt.clf()
+        plt.figure()
         plt.imshow(wc)
         plt.axis("off")
         plt.tight_layout(pad = 0)
