@@ -452,10 +452,10 @@ class TutorialBotView(View):
                     msg = "Mail was successfully sent"
 
                 elif status == "invalid":
-                    msg = "Email format is invalid"
+                    msg = "Email doesn't exist"
 
                 else:
-                    msg = "Email was unknown"
+                    msg = "Email doesn't exist"
             self.send_message(msg, t_chat["id"])
 
         elif cmd == "help":
