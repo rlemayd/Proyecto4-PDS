@@ -227,7 +227,7 @@ class TutorialBotView(View):
                         listOfKeys.append(key)
                 if len(listOfKeys)==1:
                     x = self.get_user(t_chat["id"], listOfKeys[0])
-                    msg = f"The user with most messages is {x} with {itemMaxValue[1]}"
+                    msg = f"The user with most messages since {searched_date} is {x} with {itemMaxValue[1]}"
                     self.send_message(msg, t_chat["id"])
                 else:
                     x = ""
