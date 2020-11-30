@@ -463,7 +463,7 @@ class TutorialBotView(View):
 
         elif cmd == "help":
             msg = """I can help you analyze and get statistics of your groups!.\nThe commands that contain \[] needs to be given to work\n<days> is an optional param, if it's not given it's replaced by 7 days.\nYou can control me by sending these commands:\n
-/add \[commandName]=\[commandValue] - To answer a specific word when i receive a certain word.\n
+/add \[commandName]=\[commandValue] - To answer a specific word or phrase when i receive a certain word.\n
 /most\_messages <days> - Obtain the user with most messages from a specific date.\n
 /most\_characters <days> - Obtain the user with most characters sent from a specific date.\n
 /absent\_user <days> - Obtain the user who have not written messages in a period from a specific date.\n
