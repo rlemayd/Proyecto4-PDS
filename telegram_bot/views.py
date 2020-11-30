@@ -76,7 +76,7 @@ class TutorialBotView(View):
                 if cmd[1].isnumeric():
                     cmd_time = int(cmd[1])
                 else:
-                    msg = "You didn't give the quantity of days to search for, so we'll replace it by the default value..."
+                    msg = "You didn't give the quantity of days to search for, so we'll replace it by the default value (7 days)..."
                     self.send_message(msg, t_chat["id"])
                 cmd = cmd[0]
             elif len(cmd) == 2 and cmd[0] == "last_message":
