@@ -233,7 +233,7 @@ class TutorialBotView(View):
                     x = ""
                     for i in listOfKeys:
                         x += self.get_user(t_chat["id"], i) + ", "
-                    msg = f"The users with most messages are {x} with {itemMaxValue[1]}"
+                    msg = f"The users with most messages since {searched_date} are {x} with {itemMaxValue[1]}"
                     self.send_message(msg, t_chat["id"])
             else:
                 msg = f"No user has spoken for {time_searched} days"
@@ -262,13 +262,13 @@ class TutorialBotView(View):
                         listOfKeys.append(key)
                 if len(listOfKeys)==1:
                     x = self.get_user(t_chat["id"], listOfKeys[0])
-                    msg = f"The user with most characters is {x} with {itemMaxValue[1]}"
+                    msg = f"The user with most characters since {searched_date} is {x} with {itemMaxValue[1]}"
                     self.send_message(msg, t_chat["id"])
                 else:
                     x = ""
                     for i in listOfKeys:
                         x += self.get_user(t_chat["id"], i) + ", "
-                    msg = f"The users with most characters are {x} with {itemMaxValue[1]}"
+                    msg = f"The users with most characters since {searched_date} are {x} with {itemMaxValue[1]}"
                     self.send_message(msg, t_chat["id"])
             else:
                 msg = f"No user has spoken for {time_searched} days"
