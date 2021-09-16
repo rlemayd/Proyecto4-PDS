@@ -1,4 +1,4 @@
-# Project for Course "Proyecto de Desarrollo de Softfware" based on a Telegram Bot
+# Project for Course "Proyecto de Desarrollo de Software" based on a Telegram Bot
 
 This bot can do many things all related to make telegram groups better.
 
